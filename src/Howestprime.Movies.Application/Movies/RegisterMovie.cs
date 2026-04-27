@@ -1,7 +1,5 @@
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Domain.Movies;
-using Howestprime.Movies.Domain.Movies.ValueObjects;
-using Howestprime.Movies.Domain.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace Howestprime.Movies.Application.Movies;
