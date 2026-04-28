@@ -39,6 +39,10 @@ public sealed class Movie : AggregateRoot<MovieId>
         PosterUrl = posterUrl;
     }
 
+    #pragma warning disable CS8618
+    private Movie() :base(default!) {}
+    #pragma warning restore CS8618
+
     public static Movie Create(
         string title,
         string description,
