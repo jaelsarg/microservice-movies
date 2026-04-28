@@ -17,7 +17,7 @@ public sealed record RegisterMovieInput(
 
 public sealed class RegisterMovie(
     IUnitOfWork _uow,
-    ILogger _logger
+    ILogger<RegisterMovie> _logger
 ) : IUseCase<RegisterMovieInput, string>
 {
     public async Task<string> Execute(RegisterMovieInput input)
