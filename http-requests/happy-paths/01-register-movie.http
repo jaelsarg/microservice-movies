@@ -1,0 +1,21 @@
+@baseUrl = http://localhost:8000
+@apiBase = {{baseUrl}}/api
+
+### Register a movie
+# @name registerMovie
+POST {{apiBase}}/movie-catalog
+Content-Type: application/json
+
+{
+  "title": "Inception",
+  "description": "A skilled thief uses dream-sharing technology to plant an idea into the mind of a CEO.",
+  "duration": 148,
+  "genres": ["Sci-Fi", "Action", "Thriller"],
+  "releaseYear": 2010,
+  "actors": ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Elliot Page"],
+  "ageRating": 13,
+  "posterUrl": "https://example.com/posters/inception.jpg"
+}
+
+###
+@workingListLocation = {{registerMovie.response.headers.Location}}
