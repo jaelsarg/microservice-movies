@@ -13,5 +13,6 @@ public sealed record ReleaseYear(int Value) : ValueObject
     private static void EnsureYearIsValid(int year)
     {
         if (year > DateTime.Now.Year) throw new ArgumentException("Release year cannot be in the future.");
+        if (year < 0) throw new ArgumentException("Release year cannot be negative.");
     }
 }

@@ -88,5 +88,9 @@ public sealed class Movie : AggregateRoot<MovieId>
     {
         Asserts.EnsureNotEmpty(Title);
         Asserts.EnsureNotEmpty(Description);
+        Asserts.EnsureNotEmpty(Genres);
+        Asserts.EnsureNotEmpty(Actors);
+        Asserts.EnsureNotNegative(Duration.Value);
+        Asserts.EnsureNotNegative(AgeRating.Value);
     }
 }
