@@ -13,11 +13,20 @@ public static class ModuleExtensions
         IConfiguration configuration
     )
     {
-        return services;
+        return services
+            .AddApplicationModule(configuration)
+            .AddDomainEventModule(configuration)
+            .AddEFCoreModule(configuration)
+            .AddMessagingModule(configuration)
+            .AddWebApiModule(configuration);
     }
 
     public static async Task<WebApplication> UseModules(this WebApplication app)
     {
+        await app.UseEFCoreModule();
+        
+        app.UseWebApiModule();
+        
         return app;
     }
 }
