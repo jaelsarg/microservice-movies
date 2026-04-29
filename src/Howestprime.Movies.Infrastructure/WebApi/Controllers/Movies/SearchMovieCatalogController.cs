@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.Movies;
 
 public record SearchMovieCatalogRequest(
-    [FromQuery] string Title,
-    [FromQuery] string Genres,
+    [FromQuery] string? Title,
+    [FromQuery] string? Genres,
     [FromHeader(Name = "x-user-role")] string UserRole,
     [FromServices] IUseCase<SearchMovieCatalogInput, IReadOnlyList<MovieData>> UseCase
 );
@@ -28,7 +28,7 @@ public static class SearchMovieCatalogController
 
         SearchMovieCatalogInput input = new(
             request.Title,
-            request.Genres.Split(',').Select(genre => genre.Trim()).ToList()
+            request.Genres?.Split(',').Select(genre => genre.Trim()).ToList()
         );
 
         IReadOnlyList<MovieData> movies = await request.UseCase.Execute(input);
