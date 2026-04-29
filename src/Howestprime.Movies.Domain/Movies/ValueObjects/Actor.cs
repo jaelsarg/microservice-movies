@@ -14,9 +14,4 @@ public sealed record Actor(string Value) : ValueObject
     {
         if (string.IsNullOrWhiteSpace(actor)) throw new ArgumentException("Actor name cannot be empty.");
     }
-
-    public override string ToString()
-    {
-        return base.ToString();
-    }
 }
