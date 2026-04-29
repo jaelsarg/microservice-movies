@@ -1,5 +1,4 @@
 using Howestprime.Movies.Application.Movies;
-using Howestprime.Movies.Domain.Movies;
 using UnitTests.Application.Shared;
 
 namespace UnitTests.Application.Movies;
