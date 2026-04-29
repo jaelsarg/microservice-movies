@@ -14,9 +14,4 @@ public sealed record Genre(string Value) : ValueObject
     {
         if (string.IsNullOrWhiteSpace(genre)) throw new ArgumentException("Genre cannot be empty.");
     }
-
-    public override string ToString()
-    {
-        return base.ToString();
-    }
 }
