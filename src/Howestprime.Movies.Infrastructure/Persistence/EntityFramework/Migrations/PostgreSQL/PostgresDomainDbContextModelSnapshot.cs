@@ -22,6 +22,28 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Howestprime.Movies.Domain.MovieEvents.MovieEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("MovieId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Showtime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MovieEvents", (string)null);
+                });
+
             modelBuilder.Entity("Howestprime.Movies.Domain.Movies.Movie", b =>
                 {
                     b.Property<Guid>("Id")
@@ -51,6 +73,23 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
                     b.HasKey("Id");
 
                     b.ToTable("Movies", (string)null);
+                });
+
+            modelBuilder.Entity("Howestprime.Movies.Domain.Rooms.Room", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("Howestprime.Movies.Domain.Movies.Movie", b =>
