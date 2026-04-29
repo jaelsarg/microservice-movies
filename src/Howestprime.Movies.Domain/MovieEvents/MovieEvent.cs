@@ -54,6 +54,6 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
 
     public override void ValidateState()
     {
-        throw new NotImplementedException();
+        Asserts.EnsureNotNegative(Capacity);
     }
 }
