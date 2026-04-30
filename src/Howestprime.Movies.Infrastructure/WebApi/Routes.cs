@@ -1,3 +1,4 @@
+using Howestprime.Movies.Infrastructure.WebApi.Controllers.MovieEvents;
 using Howestprime.Movies.Infrastructure.WebApi.Controllers.Movies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ public static class Routes
         RouteGroupBuilder webApi = app.MapGroup("/api");
 
         webApi.MapMovieRoutes();
+        webApi.MapMovieEventRoutes();
 
         return app;
     }
@@ -35,5 +37,18 @@ public static class Routes
             .WithDescription("Find a movie in the catalog by its ID.");
 
         return movies;
+    }
+
+    private static RouteGroupBuilder MapMovieEventRoutes(this IEndpointRouteBuilder app)
+    {
+        RouteGroupBuilder movieEvents = app.MapGroup("/movie-events")
+            .WithTags("MovieEvent, MovieEvents, Movie Showtimes")
+            .WithDescription("All endpoints related to managing movie events.");
+        
+        movieEvents.MapPost("", ScheduleMovieEventController.Invoke)
+            .WithName("ScheduleMovieEvent")
+            .WithDescription("Schedule a new movie event (showtime).");
+        
+        return movieEvents;
     }
 }
