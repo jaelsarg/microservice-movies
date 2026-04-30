@@ -20,6 +20,7 @@ public static class ApplicationModule
         // Register query use cases
         services.AddScoped<IUseCase<SearchMovieCatalogInput, IReadOnlyList<MovieData>>, SearchMovieCatalog>();
         services.AddScoped<IUseCase<FindMovieByIdInput, Optional<MovieData>>, FindMovieById>();
+        services.AddScoped<IUseCase<SearchMovieEventsInTimerangeInput, IReadOnlyList<MovieEventData>>, SearchMovieEventsInTimerange>();
 
         // Register Policies (example of automatic registration with reflection at boot time)
         services.RegisterPolicies();
