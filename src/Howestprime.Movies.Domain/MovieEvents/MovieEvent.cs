@@ -53,6 +53,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
 
     public override void ValidateState()
     {
+        Asserts.EnsureNotNegative(Capacity);
         MovieEventAsserts.EnsureShowTimeIsAt15hOr19h(Showtime);
         MovieEventAsserts.EnsureShowtimeIsInTheFuture(Showtime);
     }
