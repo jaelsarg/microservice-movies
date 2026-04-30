@@ -1,6 +1,9 @@
 using Howestprime.Movies.Application.Contracts.Ports;
+using Howestprime.Movies.Application.MovieEvents;
 using Howestprime.Movies.Application.Movies;
+using Howestprime.Movies.Domain.MovieEvents;
 using Howestprime.Movies.Domain.Movies;
+using Howestprime.Movies.Domain.Rooms;
 using Howestprime.Movies.Domain.Shared.DomainEvents;
 using Howestprime.Movies.Infrastructure.Messaging.DomainEvents;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,15 +17,21 @@ public abstract class ApplicationTestBase
 {
     protected readonly IDomainEventPublisher DomainEventPublisher;
     protected readonly InMemoryMovieRepository MovieRepository;
+    protected readonly InMemoryMovieEventRepository MovieEventRepository;
+    protected readonly InMemoryRoomRepository RoomRepository;
     protected readonly InMemoryUnitOfWork UnitOfWork;
 
     protected ApplicationTestBase()
     {
         DomainEventPublisher = new DomainEventPublisher([], CreateLogger<DomainEventPublisher>());
         MovieRepository = new InMemoryMovieRepository();
+        MovieEventRepository = new InMemoryMovieEventRepository();
+        RoomRepository = new InMemoryRoomRepository();
 
         UnitOfWork = new InMemoryUnitOfWork(DomainEventPublisher, CreateLogger<InMemoryUnitOfWork>());
         UnitOfWork.RegisterRepository<IMovieRepository>(MovieRepository);
+        UnitOfWork.RegisterRepository<IMovieEventRepository>(MovieEventRepository);
+        UnitOfWork.RegisterRepository<IRoomRepository>(RoomRepository);
     }
 
     protected static TestLogger<T> CreateLogger<T>() => new();
@@ -59,11 +68,14 @@ public abstract class ApplicationTestBaseWithDI
     private static void RegisterRepositories(IServiceCollection services)
     {
         services.AddSingleton<IMovieRepository, InMemoryMovieRepository>();
+        services.AddSingleton<IMovieEventRepository, InMemoryMovieEventRepository>();
+        services.AddSingleton<IRoomRepository, InMemoryRoomRepository>();
     }
 
     private static void RegisterUseCases(IServiceCollection services)
     {
         services.AddScoped<IUseCase<RegisterMovieInput, string>, RegisterMovie>();
+        services.AddScoped<IUseCase<ScheduleMovieEventInput, Guid>, ScheduleMovieEvent>();
     }
 
     private static void RegisterPolicies(IServiceCollection services)
