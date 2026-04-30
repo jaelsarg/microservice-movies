@@ -1,6 +1,4 @@
 using System.Linq.Expressions;
-using Aornis;
-using Howestprime.Movies.Domain.Movies;
 
 namespace Howestprime.Movies.Application.Contracts.Data.Filters;
 
