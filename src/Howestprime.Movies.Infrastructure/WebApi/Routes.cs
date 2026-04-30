@@ -14,6 +14,7 @@ public static class Routes
 
         webApi.MapMovieRoutes();
         webApi.MapMovieEventRoutes();
+        webApi.MapHowestprimeScheduleRoutes();
 
         return app;
     }
@@ -50,5 +51,18 @@ public static class Routes
             .WithDescription("Schedule a new movie event (showtime).");
         
         return movieEvents;
+    }
+
+    private static RouteGroupBuilder MapHowestprimeScheduleRoutes(this IEndpointRouteBuilder app)
+    {
+        RouteGroupBuilder howestprimeSchedule = app.MapGroup("/howestprime-schedule")
+            .WithTags("HowestprimeSchedule, Schedule, Movie Showtimes")
+            .WithDescription("Endpoints related to the Howestprime schedule.");
+
+        howestprimeSchedule.MapGet("", GetHowestprimeScheduleController.Invoke)
+            .WithName("GetHowestprimeSchedule")
+            .WithDescription("Get the schedule of movie events for the next 14 days.");
+
+        return howestprimeSchedule;
     }
 }
