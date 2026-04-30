@@ -1,5 +1,5 @@
 using Howestprime.Movies.Domain.Movies;
-using Howestprime.Movies.Domain.Movies.ValueObjects;
+using Howestprime.Movies.Domain.Shared;
 
 namespace UnitTests.Domain.Movies;
 
@@ -22,6 +22,35 @@ public sealed class MovieTests
         var movie = Movie.Create(title, description, releaseYear, duration, genres, actors, ageRating, posterUrl);
 
         // Assert
+        Assert.Equal(title, movie.Title);
+        Assert.Equal(description, movie.Description);
+        Assert.Equal(releaseYear, movie.ReleaseYear.Value);
+        Assert.Equal(duration, movie.Duration.Value);
+        Assert.Equal(genres.Count(), movie.Genres.Count());
+        Assert.Equal(actors.Count(), movie.Actors.Count());
+        Assert.Equal(ageRating, movie.AgeRating.Value);
+        Assert.Equal(posterUrl, movie.PosterUrl.Value);
+    }
+
+    [Fact]
+    public void Create_WithValidInputAndId_Succeeds()
+    {
+        // Arrange
+        MovieId movieId = EntityId.New<MovieId>();
+        string title = "Inception";
+        string description = "A mind-bending thriller about dreams within dreams.";
+        int releaseYear = 2010;
+        int duration = 148;
+        List<string> genres = new() { "Action", "Sci-Fi" };
+        List<string> actors = new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" };
+        int ageRating = 13;
+        string posterUrl = "https://example.com/inception.jpg";
+
+        // Act
+        var movie = Movie.Create(title, description, releaseYear, duration, genres, actors, ageRating, posterUrl, movieId);
+
+        // Assert
+        Assert.Equal(movieId, movie.Id);
         Assert.Equal(title, movie.Title);
         Assert.Equal(description, movie.Description);
         Assert.Equal(releaseYear, movie.ReleaseYear.Value);
