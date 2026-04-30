@@ -49,7 +49,11 @@ public static class Routes
         movieEvents.MapPost("", ScheduleMovieEventController.Invoke)
             .WithName("ScheduleMovieEvent")
             .WithDescription("Schedule a new movie event (showtime).");
-        
+
+        movieEvents.MapGet("", GetMovieEventsByMonthController.Invoke)
+            .WithName("FindMovieEventsForMonth")
+            .WithDescription("Find movie events for a given month and year.");
+
         return movieEvents;
     }
 
@@ -60,8 +64,8 @@ public static class Routes
             .WithDescription("Endpoints related to the Howestprime schedule.");
 
         howestprimeSchedule.MapGet("", GetHowestprimeScheduleController.Invoke)
-            .WithName("GetHowestprimeSchedule")
-            .WithDescription("Get the schedule of movie events for the next 14 days.");
+            .WithName("FindHowestprimeSchedule")
+            .WithDescription("Find the Howestprime movie schedule for the next 14 days.");
 
         return howestprimeSchedule;
     }
