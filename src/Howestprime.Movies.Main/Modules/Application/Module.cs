@@ -1,6 +1,7 @@
 using Aornis;
 using Howestprime.Movies.Application.Contracts.Data;
 using Howestprime.Movies.Application.Contracts.Ports;
+using Howestprime.Movies.Application.MovieEvents;
 using Howestprime.Movies.Application.Movies;
 
 namespace Howestprime.Movies.Main.Modules.Application;
@@ -14,6 +15,7 @@ public static class ApplicationModule
     {
         // Register command use cases
         services.AddScoped<IUseCase<RegisterMovieInput, string>, RegisterMovie>();
+        services.AddScoped<IUseCase<ScheduleMovieEventInput, Guid>, ScheduleMovieEvent>();
 
         // Register query use cases
         services.AddScoped<IUseCase<SearchMovieCatalogInput, IReadOnlyList<MovieData>>, SearchMovieCatalog>();
