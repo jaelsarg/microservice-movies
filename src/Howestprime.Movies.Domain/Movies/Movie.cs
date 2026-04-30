@@ -51,11 +51,12 @@ public sealed class Movie : AggregateRoot<MovieId>
         List<string> genres,
         List<string> actors,
         int ageRating,
-        string posterUrl
+        string posterUrl,
+        MovieId? id = null
     )
     {
         Movie movie = new(
-            EntityId.New<MovieId>(),
+            id ?? EntityId.New<MovieId>(),
             title,
             description,
             ReleaseYear.Create(releaseYear),
