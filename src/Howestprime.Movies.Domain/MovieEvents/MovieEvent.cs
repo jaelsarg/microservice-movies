@@ -56,4 +56,9 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
         MovieEventAsserts.EnsureShowTimeIsAt15hOr19h(Showtime);
         MovieEventAsserts.EnsureShowtimeIsInTheFuture(Showtime);
     }
+
+    public void UpdateMovieId(MovieId movieId)
+    {
+        MovieId = movieId;
+    }
 }
