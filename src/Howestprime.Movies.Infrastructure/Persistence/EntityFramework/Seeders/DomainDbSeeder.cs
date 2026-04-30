@@ -14,7 +14,7 @@ public class DomainDbSeeder(DomainDbContext context, ILogger<DomainDbSeeder> _lo
 
         _logger.LogInformation("Seeding domain database with rooms...");
 
-        var rooms = new List<Room>
+        List<Room> rooms = new List<Room>
         {
             Room.Create("Blue Room", 100, EntityId.New<RoomId>(Guid.Parse("019d059e-d220-71db-8a1a-ec7569492999"))),
             Room.Create("Yellow Room", 80, EntityId.New<RoomId>(Guid.Parse("019d059e-d220-75fe-b936-0a97cd75216e")))
