@@ -4,7 +4,7 @@ public static class MovieEventAsserts
 {
     public static void EnsureShowTimeIsAt15hOr19h(DateTime time)
     {
-        if (time.Hour != 15 && time.Hour != 19)
+        if ((time.Hour != 15 && time.Hour != 19) || time.Minute != 00 || time.Second != 00)
             throw new ArgumentException("Time must be at 15h or 19h.", nameof(time));
     }
 
