@@ -5,7 +5,4 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Reposito
 
 public sealed class RoomRepository(
     DomainDbContext context
-) : EfCoreGenericRepository<Room, RoomId>(context), IRoomRepository
-{
-    
-}
+) : EfCoreGenericRepository<Room, RoomId>(context), IRoomRepository {}
