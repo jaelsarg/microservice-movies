@@ -5,7 +5,7 @@ namespace UnitTests.Application.Mocks;
 
 public sealed class InMemoryRoomRepository : IRoomRepository
 {
-    private readonly HashSet<Room> _rooms = [];
+    private readonly HashSet<Room> _rooms = new();
 
     public Task<Optional<Room>> ById(RoomId id)
     {
@@ -17,7 +17,7 @@ public sealed class InMemoryRoomRepository : IRoomRepository
     public Task<bool> Exists(RoomId id)
     {
         return Task.FromResult(
-            _rooms.Any(movie => movie.Id.Equals(id))
+            _rooms.Any(room => room.Id.Equals(id))
         );
     }
 
