@@ -37,6 +37,7 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
                 value => AgeRating.Create(value)
             )
             .IsRequired();
+            
         builder.Property(movie => movie.PosterUrl)
             .HasConversion(
                 posterUrl => posterUrl.Value,
