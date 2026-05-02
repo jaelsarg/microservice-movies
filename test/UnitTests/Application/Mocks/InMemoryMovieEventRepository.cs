@@ -6,19 +6,19 @@ namespace UnitTests.Application.Mocks;
 
 public sealed class InMemoryMovieEventRepository : IMovieEventRepository
 {
-    private readonly HashSet<MovieEvent> _movieEvents = [];
+    private readonly HashSet<MovieEvent> _movieEvents = new();
 
     public Task<Optional<MovieEvent>> ById(MovieEventId id)
     {
         return Task.FromResult(
-            Optional.Of(_movieEvents.FirstOrDefault(room => room.Id.Equals(id)))
+            Optional.Of(_movieEvents.FirstOrDefault(movieEvent => movieEvent.Id.Equals(id)))
         );
     }
 
     public Task<IEnumerable<MovieEvent>> ByShowtimeAndRoomID(DateTime showtime, RoomId roomId)
     {
         return Task.FromResult(
-            _movieEvents.Where(movieEvent => movieEvent.Showtime == showtime && movieEvent.RoomId == roomId)
+            _movieEvents.Where(movieEvent => movieEvent.Showtime == showtime && movieEvent.RoomId.Equals(roomId))
         );
     }
 
