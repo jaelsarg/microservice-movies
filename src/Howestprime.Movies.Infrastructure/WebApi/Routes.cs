@@ -54,6 +54,10 @@ public static class Routes
             .WithName("FindMovieEventsForMonth")
             .WithDescription("Find movie events for a given month and year.");
 
+        movieEvents.MapPost("/{MovieEventId}/bookings", BookMovieEventController.Invoke)
+            .WithName("BookMovieEvent")
+            .WithDescription("Book a movie event for a given number of standard and discount visitors.");
+
         return movieEvents;
     }
 
