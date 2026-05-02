@@ -1,4 +1,5 @@
 using Howestprime.Movies.Domain.MovieEvents;
+using Howestprime.Movies.Domain.MovieEvents.Events;
 using Howestprime.Movies.Domain.Movies;
 using Howestprime.Movies.Domain.Rooms;
 using Howestprime.Movies.Domain.Shared;
@@ -90,5 +91,37 @@ public sealed class MovieEventTests
 
         // Assert
         Assert.Equal(newMovieId, movieEvent.MovieId);
+    }
+
+    [Fact]
+    public void Book_WithValidInput_ShouldBookMovieEventAndRaiseEvent()
+    {
+        // Arrange
+        MovieId movieId = EntityId.New<MovieId>();
+        RoomId roomId = EntityId.New<RoomId>();
+        DateTime showtime = DateTime.Now.AddDays(1).Date.AddHours(15);
+        int capacity = 100;
+        MovieEvent movieEvent = MovieEvent.Create(movieId, roomId, showtime, capacity);
+
+        int standardVisitors = 2;
+        int discountVisitors = 1;
+        string roomName = "Room 1";
+
+        // Act
+        BookingId bookingId = movieEvent.Book(standardVisitors, discountVisitors, roomName);
+
+        // Assert
+        Assert.Equal(standardVisitors + discountVisitors, movieEvent.Visitors);
+        Assert.Single(movieEvent.Bookings);
+        Assert.Contains(
+            movieEvent.DomainEvents,
+            e => e is BookingOpened opened &&
+                opened.BookingId == bookingId &&
+                opened.MovieId == movieId &&
+                opened.Room == roomName &&
+                opened.Showtime == showtime &&
+                opened.StandardVisitors == standardVisitors &&
+                opened.DiscountVisitors == discountVisitors
+        );
     }
 }
