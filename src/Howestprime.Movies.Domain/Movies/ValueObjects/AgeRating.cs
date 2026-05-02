@@ -1,6 +1,8 @@
+using Howestprime.Movies.Domain.Shared;
+
 namespace Howestprime.Movies.Domain.Movies.ValueObjects;
 
-public sealed record AgeRating(int Value)
+public sealed record AgeRating(int Value) : ValueObject
 {
     public static AgeRating Create(int value)
     {
