@@ -33,7 +33,12 @@ public static class SearchMovieCatalogController
 
         IReadOnlyList<MovieData> movies = await request.UseCase.Execute(input);
 
-        MovieCollection response = new MovieCollection(
+        return TypedResults.Ok(BuildResponse(movies));
+    }
+
+    private static MovieCollection BuildResponse(IReadOnlyList<MovieData> movies)
+    {
+        return new MovieCollection(
             movies.Select(movie => new Movie(
                 movie.Id,
                 movie.Title,
@@ -45,7 +50,5 @@ public static class SearchMovieCatalogController
                 movie.PosterUrl
             )).ToList()
         );
-
-        return TypedResults.Ok(response);
     }
 }

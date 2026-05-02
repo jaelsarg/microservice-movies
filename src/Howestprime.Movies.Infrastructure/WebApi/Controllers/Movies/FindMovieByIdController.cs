@@ -32,7 +32,12 @@ public static class FindMovieByIdController
         MovieData movieData = (await request.UseCase.Execute(input))
             .OrElseThrow(() => new NotFoundException($"Movie with id {request.Id} not found."));
         
-        return TypedResults.Ok(new Movie(
+        return TypedResults.Ok(BuildResponse(movieData));
+    }
+
+    private static Movie BuildResponse(MovieData movieData)
+    {
+        return new Movie(
             movieData.Id,
             movieData.Title,
             movieData.Description,
@@ -41,6 +46,6 @@ public static class FindMovieByIdController
             movieData.Actors.Select(a => a.Value).ToList(),
             movieData.AgeRating,
             movieData.PosterUrl
-        ));
+        );
     }
 }
