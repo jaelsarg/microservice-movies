@@ -39,6 +39,9 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
                     b.Property<DateTime>("Showtime")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("Visitors")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("MovieEvents", (string)null);
@@ -90,6 +93,41 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
                     b.HasKey("Id");
 
                     b.ToTable("Rooms", (string)null);
+                });
+
+            modelBuilder.Entity("Howestprime.Movies.Domain.MovieEvents.MovieEvent", b =>
+                {
+                    b.OwnsMany("Howestprime.Movies.Domain.MovieEvents.Booking", "Bookings", b1 =>
+                        {
+                            b1.Property<Guid>("MovieEventId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd();
+
+                            b1.Property<int>("BookingStatus");
+
+                            b1.Property<int>("DiscountVisitors");
+
+                            b1.Property<Guid>("Id");
+
+                            b1.Property<int>("PaymentStatus");
+
+                            b1.Property<string>("SeatNumbers")
+                                .IsRequired();
+
+                            b1.Property<int>("StandardVisitors");
+
+                            b1.HasKey("MovieEventId", "__synthesizedOrdinal");
+
+                            b1.ToTable("MovieEvents");
+
+                            b1.ToJson("Bookings");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MovieEventId");
+                        });
+
+                    b.Navigation("Bookings");
                 });
 
             modelBuilder.Entity("Howestprime.Movies.Domain.Movies.Movie", b =>
