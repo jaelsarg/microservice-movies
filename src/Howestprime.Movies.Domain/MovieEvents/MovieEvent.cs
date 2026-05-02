@@ -1,3 +1,4 @@
+using Howestprime.Movies.Domain.MovieEvents.Events;
 using Howestprime.Movies.Domain.Movies;
 using Howestprime.Movies.Domain.Rooms;
 using Howestprime.Movies.Domain.Shared;
@@ -12,23 +13,29 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
     public RoomId RoomId { get; private set; }
     public DateTime Showtime { get; private set; }
     public int Capacity { get; private set; }
+    public List<Booking> Bookings { get; private set; } = new List<Booking>();
+    public int Visitors { get; private set; }
 
     private MovieEvent(
         MovieEventId id,
         MovieId movieId,
         RoomId roomId,
         DateTime showtime,
-        int capacity
+        int capacity,
+        List<Booking> bookings,
+        int visitors
     ) : base(id)
     {
         MovieId = movieId;
         RoomId = roomId;
         Showtime = showtime;
         Capacity = capacity;
+        Bookings = bookings;
+        Visitors = visitors;
     }
     
     #pragma warning disable CS8618
-    private MovieEvent() :base(default!) {}
+    private MovieEvent() :base(default!){}
     #pragma warning restore CS8618
 
     public static MovieEvent Create(
@@ -43,7 +50,9 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
             movieId,
             roomId,
             showtime,
-            capacity
+            capacity,
+            new List<Booking>(),
+            0
         );
 
         movieEvent.ValidateState();
@@ -61,5 +70,39 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
     public void UpdateMovieId(MovieId movieId)
     {
         MovieId = movieId;
+    }
+
+    public BookingId Book(int standardVisitors, int discountVisitors, string roomName)
+    {
+        int totalVisitors = standardVisitors + discountVisitors;
+        List<string> seatNumbers = new();
+
+        for (int i = 0; i < totalVisitors; i++)
+        {
+            seatNumbers.Add((Visitors + i + 1).ToString());
+        }
+
+        Booking booking = Booking.Create(
+            BookingStatus.Open,
+            PaymentStatus.Pending,
+            standardVisitors,
+            discountVisitors,
+            seatNumbers
+        );
+
+        Bookings.Add(booking);
+        Visitors += totalVisitors;
+
+        RaiseDomainEvent(new BookingOpened(
+            booking.Id,
+            MovieId,
+            roomName,
+            Showtime,
+            standardVisitors,
+            discountVisitors,
+            seatNumbers
+        ));
+
+        return booking.Id;
     }
 }
