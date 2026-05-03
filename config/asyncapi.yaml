@@ -69,6 +69,18 @@ channels:
           type: topic
           routingKey: howestprime.movies.movieevent.bookingopened
 
+  MovieDetailsChanged:
+    messages:
+      MovieDetailsChanged:
+        $ref: '#/components/messages/MovieDetailsChanged'
+    bindings:
+      amqp:
+        is: routingKey
+        exchange:
+          name: howestprime
+          type: topic
+          routingKey: howestprime.movies.movie.moviedetailschanged
+
 operations:
   # Receive operations
   WhenPaymentFailedCloseBooking:
@@ -104,12 +116,58 @@ operations:
     messages:
       - $ref: '#/channels/BookingOpened/messages/BookingOpened'
 
+  MovieDetailsChanged:
+    action: send
+    channel:
+      $ref: '#/channels/MovieDetailsChanged'
+    description: Publishes a MovieDetailsChanged event when movie details are updated.
+    messages:
+      - $ref: '#/channels/MovieDetailsChanged/messages/MovieDetailsChanged'
+
 components:
   messages:
     MovieRegistered:
       name: MovieRegistered
       title: Movie Registered
       summary: Indicates a new movie has been registered.
+      payload:
+        type: object
+        properties:
+          movieId:
+            type: string
+            format: uuid
+          title:
+            type: string
+          releaseYear:
+            type: integer
+          duration:
+            type: integer
+          genres:
+            type: array
+            items:
+              type: string
+          actors:
+            type: array
+            items:
+              type: string
+          ageRating:
+            type: integer
+          posterUrl:
+            type: string
+        required:
+          - movieId
+          - title
+          - releaseYear
+          - duration
+          - genres
+          - actors
+          - ageRating
+          - posterUrl
+    
+    MovieDetailsChanged:
+      name: MovieDetailsChanged
+      title: Movie Details Changed
+      summary: Indicates that details of a movie have been changed.
       payload:
         type: object
         properties:
