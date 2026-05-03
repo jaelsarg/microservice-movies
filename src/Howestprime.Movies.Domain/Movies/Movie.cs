@@ -94,9 +94,6 @@ public sealed class Movie : AggregateRoot<MovieId>
         Asserts.EnsureNotNegative(Duration.Value);
         Asserts.EnsureNotNegative(AgeRating.Value);
         Asserts.EnsureNotNegative(ReleaseYear.Value);
-        if (ReleaseYear.Value > DateTime.UtcNow.Year)
-        {
-            throw new ArgumentException("Release year cannot be in the future.");
-        }
+        if (ReleaseYear.Value > DateTime.UtcNow.Year) throw new ArgumentException("Release year cannot be in the future.");
     }
 }
