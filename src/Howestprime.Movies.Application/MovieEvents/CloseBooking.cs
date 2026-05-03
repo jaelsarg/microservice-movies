@@ -8,7 +8,7 @@ namespace Howestprime.Movies.Application.MovieEvents;
 
 public sealed record CloseBookingInput(
     Guid BookingId,
-    CloseBookingReason Reason
+    string Reason
 );
 
 public sealed class CloseBooking(
@@ -18,14 +18,16 @@ public sealed class CloseBooking(
 {
     public async Task Execute(CloseBookingInput input)
     {
-        logger.LogDebug($"Executing {nameof(CloseBooking)} for booking with id {input.BookingId} and reason {input.Reason}.");
-
         BookingId bookingId = new(input.BookingId);
         Optional<MovieEvent> movieEventOptional = await uow.Repo<IMovieEventRepository>().ByBookingId(bookingId);
         if (!movieEventOptional.HasValue) throw new NotFoundException($"Booking with id {input.BookingId} not found.");
         MovieEvent movieEvent = movieEventOptional.Value;
 
-        CloseBookingReason reason = input.Reason;
+        if (input.Reason != "PaymentFailed" && input.Reason != "PaymentSuccess") throw new ArgumentException($"Invalid reason for closing booking: {input.Reason}.");
+
+        CloseBookingReason reason = input.Reason == "PaymentFailed"
+            ? CloseBookingReason.PaymentFailed
+            : CloseBookingReason.PaymentSuccess;
 
         movieEvent.CloseBooking(bookingId, reason);
 
