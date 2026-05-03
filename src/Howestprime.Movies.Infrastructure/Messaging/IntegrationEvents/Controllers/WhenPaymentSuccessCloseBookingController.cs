@@ -21,7 +21,7 @@ public sealed class WhenPaymentSuccessCloseBookingController(
 
         CloseBookingInput input = new(
             BookingId: body.BookingId,
-            Reason: CloseBookingReason.PaymentSuccess
+            Reason: "PaymentSuccess"
         );
 
         await useCase.Execute(input);

@@ -1,6 +1,5 @@
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.MovieEvents;
-using Howestprime.Movies.Domain.MovieEvents;
 using Howestprime.Movies.Infrastructure.Messaging.IntegrationEvents.Messages;
 using Howestprime.Movies.Infrastructure.Messaging.IntegrationEvents.Shared.Contracts;
 using Howestprime.Movies.Infrastructure.Messaging.IntegrationEvents.Shared.Messages;
@@ -21,7 +20,7 @@ public sealed class WhenPaymentFailedCloseBookingController(
 
         CloseBookingInput input = new(
             BookingId: body.BookingId,
-            Reason: CloseBookingReason.PaymentFailed
+            Reason: "PaymentFailed"
         );
 
         await useCase.Execute(input);
