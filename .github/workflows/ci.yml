@@ -59,7 +59,7 @@ jobs:
             /p:Threshold=97 \
             /p:ThresholdType=line \
             "/p:Include=[Howestprime.Movies.Application]*%3b[Howestprime.Movies.Domain]*"
-            "/p:Exclude=[Howestprime.Movies.Infrastructure]*3b[Howestprime.Movies.Shared]*"
+            "/p:Exclude=[Howestprime.Movies.Infrastructure]*%3b[Howestprime.Movies.Shared]*"
         working-directory: test/UnitTests
 
       - name: Upload coverage report
