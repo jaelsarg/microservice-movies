@@ -96,4 +96,40 @@ public sealed class Movie : AggregateRoot<MovieId>
         Asserts.EnsureNotNegative(ReleaseYear.Value);
         if (ReleaseYear.Value > DateTime.UtcNow.Year) throw new ArgumentException("Release year cannot be in the future.");
     }
+
+    public void ChangeDetails(
+        string title,
+        string description,
+        int releaseYear,
+        int duration,
+        List<string> genres,
+        List<string> actors,
+        int ageRating,
+        string posterUrl
+    )
+    {
+        Title = title;
+        Description = description;
+        ReleaseYear = ReleaseYear.Create(releaseYear);
+        Duration = Duration.Create(duration);
+        Genres = genres.Select(Genre.Create).ToList();
+        Actors = actors.Select(Actor.Create).ToList();
+        AgeRating = AgeRating.Create(ageRating);
+        PosterUrl = PosterUrl.Create(posterUrl);
+
+        ValidateState();
+
+        RaiseDomainEvent(
+            new MovieDetailsChanged(
+                Id,
+                Title,
+                PosterUrl,
+                ReleaseYear,
+                Duration,
+                Genres,
+                Actors,
+                AgeRating
+            )
+        );
+    }
 }
