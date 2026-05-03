@@ -11,8 +11,8 @@ namespace UnitTests.Application.MovieEvents;
 public sealed class ScheduleMovieEventTests : ApplicationTestBase
 {
     private readonly ScheduleMovieEvent _scheduleMovieEvent;
-    private readonly MovieId _movieId = EntityId.New<MovieId>();
-    private readonly RoomId _roomId = EntityId.New<RoomId>();
+    private readonly Guid _movieId = Guid.NewGuid();
+    private readonly Guid _roomId = Guid.NewGuid();
 
     public ScheduleMovieEventTests()
     {
@@ -34,13 +34,13 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
             new List<string> { "Actor 1", "Actor 2" },
             16,
             "http://example.com/poster.jpg",
-            _movieId
+            EntityId.New<MovieId>(_movieId)
         );
 
         Room room = Room.Create(
             "Room 1",
             100,
-            _roomId
+            EntityId.New<RoomId>(_roomId)
         );
 
         await MovieRepository.Save(movie);
@@ -51,8 +51,8 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
 
         // Assert
         MovieEvent createdMovieEvent = (await MovieEventRepository.ById(new MovieEventId(movieEventId))).Value;
-        Assert.Equal(_movieId, createdMovieEvent.MovieId);
-        Assert.Equal(_roomId, createdMovieEvent.RoomId);
+        Assert.Equal(EntityId.New<MovieId>(_movieId), createdMovieEvent.MovieId);
+        Assert.Equal(EntityId.New<RoomId>(_roomId), createdMovieEvent.RoomId);
         Assert.Equal(requestedShowtime, createdMovieEvent.Showtime);
     }
 
@@ -60,7 +60,7 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
     public async Task Execute_WithNonExistingMovie_ShouldThrowNotFoundException()
     {
         // Arrange
-        MovieId nonExistingMovieId = EntityId.New<MovieId>();
+        Guid nonExistingMovieId = Guid.NewGuid();
         DateTime requestedShowtime = new DateTime(2025, 5, 12, 19, 0, 0);
 
         // Act & Assert
@@ -71,7 +71,7 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
     public async Task Execute_WithNonExistingRoom_ShouldThrowNotFoundException()
     {
         // Arrange
-        RoomId nonExistingRoomId = EntityId.New<RoomId>();
+        Guid nonExistingRoomId = Guid.NewGuid();
         DateTime requestedShowtime = new DateTime(2025, 5, 12, 19, 0, 0);
 
         Movie movie = Movie.Create(
@@ -83,7 +83,7 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
             new List<string> { "Actor 1", "Actor 2" },
             16,
             "http://example.com/poster.jpg",
-            _movieId
+            EntityId.New<MovieId>(_movieId)
         );
 
         await MovieRepository.Save(movie);
@@ -97,6 +97,7 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
     {
         // Arrange
         DateTime requestedShowtime = new DateTime(2026, 5, 12, 19, 0, 0);
+        Guid movieId2 = Guid.NewGuid();
 
         Movie movie1 = Movie.Create(
             "Test Movie 1",
@@ -107,7 +108,7 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
             new List<string> { "Actor 1", "Actor 2" },
             16,
             "http://example.com/poster1.jpg",
-            _movieId
+            EntityId.New<MovieId>(_movieId)
         );
 
         Movie movie2 = Movie.Create(
@@ -119,13 +120,13 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
             new List<string> { "Actor 3", "Actor 4" },
             12,
             "http://example.com/poster2.jpg",
-            EntityId.New<MovieId>()
+            EntityId.New<MovieId>(movieId2)
         );
 
         Room room = Room.Create(
             "Room 1",
             100,
-            _roomId
+            EntityId.New<RoomId>(_roomId)
         );
 
         await MovieRepository.Save(movie1);
@@ -142,7 +143,7 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
         await MovieEventRepository.Save(existingMovieEvent);
 
         // Act
-        Guid movieEventId = await _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(movie2.Id, requestedShowtime, _roomId));
+        Guid movieEventId = await _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(movieId2, requestedShowtime, _roomId));
 
         // Assert
         MovieEvent updatedMovieEvent = (await MovieEventRepository.ById(new MovieEventId(movieEventId))).Value;
