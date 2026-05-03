@@ -107,4 +107,22 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
 
         return booking.Id;
     }
+
+    public void CloseBooking(BookingId bookingId, CloseBookingReason reason)
+    {
+        Booking booking = Bookings.FirstOrDefault(b => b.Id == bookingId) ?? throw new InvalidOperationException($"Booking with id {bookingId} not found.");
+
+        if (reason == CloseBookingReason.PaymentSuccess)
+        {
+            booking.Close();
+            booking.MarkPaymentAsPaid();
+        }
+        else
+        {
+            booking.Close();
+            booking.MarkPaymentAsFailed();
+            booking.ReleaseSeats();
+            Visitors -= booking.StandardVisitors + booking.DiscountVisitors;
+        }
+    }
 }

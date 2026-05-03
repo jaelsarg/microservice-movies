@@ -59,4 +59,24 @@ public sealed class Booking : Entity<BookingId>
         if (StandardVisitors + DiscountVisitors <= 0) throw new ArgumentException("The total number of visitors must be greater than 0.");
         if (SeatNumbers.Count != StandardVisitors + DiscountVisitors) throw new ArgumentException("The number of seat numbers must match the total number of visitors.");
     }
+
+    public void Close()
+    {
+        BookingStatus = BookingStatus.Closed;
+    }
+
+    public void MarkPaymentAsPaid()
+    {
+        PaymentStatus = PaymentStatus.Success;
+    }
+
+    public void MarkPaymentAsFailed()
+    {
+        PaymentStatus = PaymentStatus.Failed;
+    }
+
+    public void ReleaseSeats()
+    {
+        SeatNumbers.Clear();
+    }
 }
