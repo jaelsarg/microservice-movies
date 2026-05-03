@@ -56,8 +56,8 @@ public sealed class Booking : Entity<BookingId>
 
     public override void ValidateState()
     {
-        if (StandardVisitors + DiscountVisitors <= 0) throw new ArgumentException("The total number of visitors must be greater than 0.");
-        if (SeatNumbers.Count != StandardVisitors + DiscountVisitors) throw new ArgumentException("The number of seat numbers must match the total number of visitors.");
+        BookingAsserts.EnsureVisitorsAreGreaterThanZero(StandardVisitors, DiscountVisitors);
+        BookingAsserts.EnsureSeatNumbersMatchVisitors(SeatNumbers, StandardVisitors, DiscountVisitors);
     }
 
     public void Close()
