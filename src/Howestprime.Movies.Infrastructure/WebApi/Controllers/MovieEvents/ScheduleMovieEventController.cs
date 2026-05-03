@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.MovieEvents;
-using Howestprime.Movies.Domain.Movies;
-using Howestprime.Movies.Domain.Rooms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -27,9 +25,9 @@ public static class ScheduleMovieEventController
     )
     {
         ScheduleMovieEventInput input = new(
-            new MovieId(request.Body.MovieId),
+            request.Body.MovieId,
             request.Body.RequestedShowtime,
-            new RoomId(request.Body.RoomId)
+            request.Body.RoomId
         );
 
         Guid movieEventId = await request.UseCase.Execute(input);

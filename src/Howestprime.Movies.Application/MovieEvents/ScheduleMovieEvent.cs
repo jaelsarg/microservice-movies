@@ -3,15 +3,16 @@ using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Domain.MovieEvents;
 using Howestprime.Movies.Domain.Movies;
 using Howestprime.Movies.Domain.Rooms;
+using Howestprime.Movies.Domain.Shared;
 using Howestprime.Movies.Shared.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace Howestprime.Movies.Application.MovieEvents;
 
 public sealed record ScheduleMovieEventInput(
-    MovieId MovieId,
+    Guid MovieId,
     DateTime RequestedShowtime,
-    RoomId RoomId
+    Guid RoomId
 );
 
 public sealed class ScheduleMovieEvent(
@@ -23,11 +24,11 @@ public sealed class ScheduleMovieEvent(
     {
         MovieEvent movieEvent; 
 
-        MovieId movieId = input.MovieId;
+        MovieId movieId = EntityId.New<MovieId>(input.MovieId);
         Optional<Movie> movieOptional = await uow.Repo<IMovieRepository>().ById(movieId);
         if (!movieOptional.HasValue) throw new NotFoundException($"Movie with id {movieId} not found.");
 
-        RoomId roomId = input.RoomId;
+        RoomId roomId = EntityId.New<RoomId>(input.RoomId);
         Optional<Room> roomOptional = await uow.Repo<IRoomRepository>().ById(roomId);
         if (!roomOptional.HasValue) throw new NotFoundException($"Room with id {roomId} not found.");
 
