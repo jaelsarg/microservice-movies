@@ -22,6 +22,13 @@ public sealed class InMemoryMovieEventRepository : IMovieEventRepository
         );
     }
 
+    public Task<Optional<MovieEvent>> ByBookingId(BookingId bookingId)
+    {
+        return Task.FromResult(
+            Optional.Of(_movieEvents.FirstOrDefault(movieEvent => movieEvent.Bookings.Any(booking => booking.Id.Equals(bookingId))))
+        );
+    }
+
     public Task<bool> Exists(MovieEventId id)
     {
         return Task.FromResult(
