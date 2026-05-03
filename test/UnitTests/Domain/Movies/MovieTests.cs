@@ -127,7 +127,7 @@ public sealed class MovieTests
         // Arrange
         string title = "Inception";
         string description = "A mind-bending thriller about dreams within dreams.";
-        int releaseYear = DateTime.UtcNow.Year + 1;
+        int releaseYear = 2030;
         int duration = 148;
         List<string> genres = new() { "Action", "Sci-Fi" };
         List<string> actors = new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" };
