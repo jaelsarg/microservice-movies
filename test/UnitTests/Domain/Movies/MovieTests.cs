@@ -120,4 +120,24 @@ public sealed class MovieTests
         // Act & Assert
         Assert.Throws<ArgumentException>(act);
     }
+
+    [Fact]
+    public void Create_WithReleaseYearInFuture_ShouldThrow()
+    {
+        // Arrange
+        string title = "Inception";
+        string description = "A mind-bending thriller about dreams within dreams.";
+        int releaseYear = DateTime.UtcNow.Year + 1;
+        int duration = 148;
+        List<string> genres = new() { "Action", "Sci-Fi" };
+        List<string> actors = new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" };
+        int ageRating = 13;
+        string posterUrl = "https://example.com/inception.jpg";
+
+        // Act
+        Action act = () => Movie.Create(title, description, releaseYear, duration, genres, actors, ageRating, posterUrl);
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(act);
+    }
 }
