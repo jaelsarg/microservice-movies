@@ -104,15 +104,17 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
                             b1.Property<int>("__synthesizedOrdinal")
                                 .ValueGeneratedOnAdd();
 
-                            b1.Property<int>("BookingStatus");
+                            b1.Property<string>("BookingStatus")
+                                .IsRequired();
 
-                            b1.Property<int>("DiscountVisitors");
+                            b1.Property<int>("DiscountedVisitors");
 
                             b1.Property<Guid>("Id");
 
-                            b1.Property<int>("PaymentStatus");
+                            b1.Property<string>("PaymentStatus")
+                                .IsRequired();
 
-                            b1.Property<string>("SeatNumbers")
+                            b1.PrimitiveCollection<string>("SeatNumbers")
                                 .IsRequired();
 
                             b1.Property<int>("StandardVisitors");

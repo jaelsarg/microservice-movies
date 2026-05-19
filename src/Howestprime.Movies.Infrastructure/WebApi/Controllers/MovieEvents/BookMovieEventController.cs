@@ -12,7 +12,7 @@ public record BookMovieEventRequest(
 
 public record BookMovieEventBody(
     int StandardVisitors,
-    int DiscountVisitors
+    int DiscountedVisitors
 );
 
 public static class BookMovieEventController
@@ -24,7 +24,7 @@ public static class BookMovieEventController
         BookMovieEventInput input = new(
             request.MovieEventId,
             request.body.StandardVisitors,
-            request.body.DiscountVisitors
+            request.body.DiscountedVisitors
         );
 
         Guid bookingId = await request.UseCase.Execute(input);

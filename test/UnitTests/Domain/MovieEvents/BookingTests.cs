@@ -11,17 +11,17 @@ public sealed class BookingTests
         BookingStatus bookingStatus = BookingStatus.Open;
         PaymentStatus paymentStatus = PaymentStatus.Pending;
         int standardVisitors = 2;
-        int discountVisitors = 1;
-        List<string> seatNumbers = new() { "1", "2", "3" };
+        int discountedVisitors = 1;
+        List<int> seatNumbers = new() { 1, 2, 3 };
 
         // Act
-        Booking booking = Booking.Create(bookingStatus, paymentStatus, standardVisitors, discountVisitors, seatNumbers);
+        Booking booking = Booking.Create(bookingStatus, paymentStatus, standardVisitors, discountedVisitors, seatNumbers);
 
         // Assert
         Assert.Equal(bookingStatus, booking.BookingStatus);
         Assert.Equal(paymentStatus, booking.PaymentStatus);
         Assert.Equal(standardVisitors, booking.StandardVisitors);
-        Assert.Equal(discountVisitors, booking.DiscountVisitors);
+        Assert.Equal(discountedVisitors, booking.DiscountedVisitors);
         Assert.Equal(seatNumbers, booking.SeatNumbers);
     }
 
@@ -32,11 +32,11 @@ public sealed class BookingTests
         BookingStatus bookingStatus = BookingStatus.Open;
         PaymentStatus paymentStatus = PaymentStatus.Pending;
         int standardVisitors = 0;
-        int discountVisitors = 0;
-        List<string> seatNumbers = new();
+        int discountedVisitors = 0;
+        List<int> seatNumbers = new();
 
         // Act
-        Action act = () => Booking.Create(bookingStatus, paymentStatus, standardVisitors, discountVisitors, seatNumbers);
+        Action act = () => Booking.Create(bookingStatus, paymentStatus, standardVisitors, discountedVisitors, seatNumbers);
 
         // Assert
         Assert.Throws<ArgumentException>(act);
@@ -49,11 +49,11 @@ public sealed class BookingTests
         BookingStatus bookingStatus = BookingStatus.Open;
         PaymentStatus paymentStatus = PaymentStatus.Pending;
         int standardVisitors = 2;
-        int discountVisitors = 1;
-        List<string> seatNumbers = new() { "1", "2" };
+        int discountedVisitors = 1;
+        List<int> seatNumbers = new() { 1, 2 };
 
         // Act
-        Action act = () => Booking.Create(bookingStatus, paymentStatus, standardVisitors, discountVisitors, seatNumbers);
+        Action act = () => Booking.Create(bookingStatus, paymentStatus, standardVisitors, discountedVisitors, seatNumbers);
 
         // Assert
         Assert.Throws<ArgumentException>(act);

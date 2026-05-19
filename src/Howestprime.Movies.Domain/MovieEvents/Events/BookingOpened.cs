@@ -8,8 +8,8 @@ public sealed class BookingOpened(
     string room,
     DateTime showtime,
     int standardVisitors,
-    int discountVisitors,
-    List<string> SeatNumbers
+    int discountedVisitors,
+    List<int> SeatNumbers
 ) : MovieEventDomainEvent(nameof(BookingOpened))
 {
     public BookingId BookingId { get; private init; } = bookingId;
@@ -17,6 +17,6 @@ public sealed class BookingOpened(
     public string Room { get; private init; } = room;
     public DateTime Showtime { get; private init; } = showtime;
     public int StandardVisitors { get; private init; } = standardVisitors;
-    public int DiscountVisitors { get; private init; } = discountVisitors;
-    public List<string> SeatNumbers { get; private init; } = SeatNumbers;
+    public int DiscountedVisitors { get; private init; } = discountedVisitors;
+    public List<int> SeatNumbers { get; private init; } = SeatNumbers;
 }

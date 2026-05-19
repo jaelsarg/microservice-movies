@@ -9,22 +9,22 @@ public sealed class Booking : Entity<BookingId>
     public BookingStatus BookingStatus { get; private set; }
     public PaymentStatus PaymentStatus { get; private set; }
     public int StandardVisitors { get; private set; }
-    public int DiscountVisitors { get; private set; }
-    public List<string> SeatNumbers { get; private set; }
+    public int DiscountedVisitors { get; private set; }
+    public List<int> SeatNumbers { get; private set; }
 
     private Booking(
         BookingId id,
         BookingStatus bookingStatus,
         PaymentStatus paymentStatus,
         int standardVisitors,
-        int discountVisitors,
-        List<string> seatNumbers
+        int discountedVisitors,
+        List<int> seatNumbers
     ) : base(id)
     {
         BookingStatus = bookingStatus;
         PaymentStatus = paymentStatus;
         StandardVisitors = standardVisitors;
-        DiscountVisitors = discountVisitors;
+        DiscountedVisitors = discountedVisitors;
         SeatNumbers = seatNumbers;
     }
 
@@ -36,8 +36,8 @@ public sealed class Booking : Entity<BookingId>
         BookingStatus bookingStatus,
         PaymentStatus paymentStatus,
         int standardVisitors,
-        int discountVisitors,
-        List<string> seatNumbers
+        int discountedVisitors,
+        List<int> seatNumbers
     )
     {
         Booking booking = new(
@@ -45,7 +45,7 @@ public sealed class Booking : Entity<BookingId>
             bookingStatus,
             paymentStatus,
             standardVisitors,
-            discountVisitors,
+            discountedVisitors,
             seatNumbers
         );
 
@@ -56,8 +56,8 @@ public sealed class Booking : Entity<BookingId>
 
     public override void ValidateState()
     {
-        BookingAsserts.EnsureVisitorsAreGreaterThanZero(StandardVisitors, DiscountVisitors);
-        BookingAsserts.EnsureSeatNumbersMatchVisitors(SeatNumbers, StandardVisitors, DiscountVisitors);
+        BookingAsserts.EnsureVisitorsAreGreaterThanZero(StandardVisitors, DiscountedVisitors);
+        BookingAsserts.EnsureSeatNumbersMatchVisitors(SeatNumbers, StandardVisitors, DiscountedVisitors);
     }
 
     public void Close()
