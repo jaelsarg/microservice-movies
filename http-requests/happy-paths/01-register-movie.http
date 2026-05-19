@@ -1,9 +1,7 @@
 @baseUrl = http://localhost:8000
-@apiBase = {{baseUrl}}/api
 
 ### Register a movie
-# @name registerMovie
-POST {{apiBase}}/movie-catalog
+POST {{baseUrl}}/api/movie-catalog
 Content-Type: application/json
 
 {
@@ -16,6 +14,3 @@ Content-Type: application/json
   "ageRating": 13,
   "posterUrl": "https://example.com/posters/inception.jpg"
 }
-
-###
-@workingListLocation = {{registerMovie.response.headers.Location}}
