@@ -15,7 +15,7 @@ public static class EntityId
     {
         var factory = (Func<Guid, TId>)_constructors.GetOrAdd(typeof(TId), CreateFactory<TId>);
 
-        Guid id = guid ?? Guid.CreateVersion7();
+        Guid id = guid ?? Guid.NewGuid();
         
         return factory(id);
     }
