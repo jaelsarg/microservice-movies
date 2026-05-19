@@ -1,4 +1,7 @@
 @baseUrl = http://localhost:8000
+@title = 
+@genres = 
+
 
 ### Register a movie
 POST {{baseUrl}}/api/movie-catalog
@@ -14,3 +17,7 @@ Content-Type: application/json
   "ageRating": 13,
   "posterUrl": "https://example.com/posters/inception.jpg"
 }
+
+### Search movie catalog by title and genre
+GET {{baseUrl}}/api/movie-catalog?title={{title}}&genres={{genres}}
+x-user-role: Manager
