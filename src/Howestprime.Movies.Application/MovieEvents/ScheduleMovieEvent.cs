@@ -11,7 +11,7 @@ namespace Howestprime.Movies.Application.MovieEvents;
 
 public sealed record ScheduleMovieEventInput(
     Guid MovieId,
-    DateTime RequestedShowtime,
+    DateTime Showtime,
     Guid RoomId
 );
 
@@ -32,7 +32,7 @@ public sealed class ScheduleMovieEvent(
         Optional<Room> roomOptional = await uow.Repo<IRoomRepository>().ById(roomId);
         if (!roomOptional.HasValue) throw new NotFoundException($"Room with id {roomId} not found.");
 
-        IEnumerable<MovieEvent> existingMovieEvents = await uow.Repo<IMovieEventRepository>().ByShowtimeAndRoomID(input.RequestedShowtime, roomId);
+        IEnumerable<MovieEvent> existingMovieEvents = await uow.Repo<IMovieEventRepository>().ByShowtimeAndRoomID(input.Showtime, roomId);
 
         if (existingMovieEvents.Any())
         {
@@ -44,7 +44,7 @@ public sealed class ScheduleMovieEvent(
             movieEvent = MovieEvent.Create(
                 movieId,
                 roomId,
-                input.RequestedShowtime,
+                input.Showtime,
                 roomOptional.Value.Capacity
             );
 

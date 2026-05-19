@@ -15,7 +15,7 @@ public record ScheduleMovieEventRequest(
 public record ScheduleMovieEventBody(
     [Required] Guid MovieId,
     [Required] Guid RoomId,
-    [Required] DateTime RequestedShowtime
+    [Required] DateTime Showtime
 );
 
 public static class ScheduleMovieEventController
@@ -24,11 +24,11 @@ public static class ScheduleMovieEventController
         [AsParameters] ScheduleMovieEventRequest request
     )
     {
-        Console.WriteLine($"Received request to schedule movie event for movie {request.Body.MovieId} in room {request.Body.RoomId} at {request.Body.RequestedShowtime}");
+        Console.WriteLine($"Received request to schedule movie event for movie {request.Body.MovieId} in room {request.Body.RoomId} at {request.Body.Showtime}");
 
         ScheduleMovieEventInput input = new(
             request.Body.MovieId,
-            request.Body.RequestedShowtime,
+            request.Body.Showtime,
             request.Body.RoomId
         );
 

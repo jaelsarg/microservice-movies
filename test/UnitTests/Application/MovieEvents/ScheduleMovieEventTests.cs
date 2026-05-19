@@ -23,7 +23,7 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
     public async Task Execute_WithValidInput_ShouldScheduleMovieEvent()
     {
         // Arrange
-        DateTime requestedShowtime = new DateTime(2026, 5, 12, 19, 0, 0);
+        DateTime showtime = new DateTime(2026, 5, 12, 19, 0, 0);
 
         Movie movie = Movie.Create(
             "Test Movie",
@@ -47,13 +47,13 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
         await RoomRepository.Save(room);
 
         // Act
-        Guid movieEventId = await _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(_movieId, requestedShowtime, _roomId));
+        Guid movieEventId = await _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(_movieId, showtime, _roomId));
 
         // Assert
         MovieEvent createdMovieEvent = (await MovieEventRepository.ById(new MovieEventId(movieEventId))).Value;
         Assert.Equal(EntityId.New<MovieId>(_movieId), createdMovieEvent.MovieId);
         Assert.Equal(EntityId.New<RoomId>(_roomId), createdMovieEvent.RoomId);
-        Assert.Equal(requestedShowtime, createdMovieEvent.Showtime);
+        Assert.Equal(showtime, createdMovieEvent.Showtime);
     }
 
     [Fact]
@@ -61,10 +61,10 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
     {
         // Arrange
         Guid nonExistingMovieId = Guid.NewGuid();
-        DateTime requestedShowtime = new DateTime(2025, 5, 12, 19, 0, 0);
+        DateTime showtime = new DateTime(2025, 5, 12, 19, 0, 0);
 
         // Act & Assert
-        await Assert.ThrowsAsync<NotFoundException>(() => _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(nonExistingMovieId, requestedShowtime, _roomId)));
+        await Assert.ThrowsAsync<NotFoundException>(() => _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(nonExistingMovieId, showtime, _roomId)));
     }
 
     [Fact]
@@ -72,7 +72,7 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
     {
         // Arrange
         Guid nonExistingRoomId = Guid.NewGuid();
-        DateTime requestedShowtime = new DateTime(2025, 5, 12, 19, 0, 0);
+        DateTime showtime = new DateTime(2025, 5, 12, 19, 0, 0);
 
         Movie movie = Movie.Create(
             "Test Movie",
@@ -89,14 +89,14 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
         await MovieRepository.Save(movie);
 
         // Act & Assert
-        await Assert.ThrowsAsync<NotFoundException>(() => _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(_movieId, requestedShowtime, nonExistingRoomId)));
+        await Assert.ThrowsAsync<NotFoundException>(() => _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(_movieId, showtime, nonExistingRoomId)));
     }
 
     [Fact]
     public async Task Execute_WithExistingMovieEvent_ShouldUpdateMovieEvent()
     {
         // Arrange
-        DateTime requestedShowtime = new DateTime(2026, 5, 12, 19, 0, 0);
+        DateTime showtime = new DateTime(2026, 5, 12, 19, 0, 0);
         Guid movieId2 = Guid.NewGuid();
 
         Movie movie1 = Movie.Create(
@@ -136,14 +136,14 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
         MovieEvent existingMovieEvent = MovieEvent.Create(
             movie1.Id,
             room.Id,
-            requestedShowtime,
+            showtime,
             room.Capacity
         );
 
         await MovieEventRepository.Save(existingMovieEvent);
 
         // Act
-        Guid movieEventId = await _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(movieId2, requestedShowtime, _roomId));
+        Guid movieEventId = await _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(movieId2, showtime, _roomId));
 
         // Assert
         MovieEvent updatedMovieEvent = (await MovieEventRepository.ById(new MovieEventId(movieEventId))).Value;
