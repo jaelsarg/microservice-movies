@@ -1,0 +1,11 @@
+@baseUrl = http://localhost:8000
+
+### Schedule a movie event
+POST {{baseUrl}}/api/movie-events
+Content-Type: application/json
+
+{
+  "movieId": "2f9b6c3d-7e1a-4b8f-9d2c-8a1e7f6b4d00",
+  "roomId": "019d059e-d220-71db-8a1a-ec7569492999",
+  "showtime": "2026-06-01T19:00:000Z"
+}
