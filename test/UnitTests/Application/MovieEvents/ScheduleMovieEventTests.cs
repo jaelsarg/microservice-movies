@@ -23,7 +23,7 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
     public async Task Execute_WithValidInput_ShouldScheduleMovieEvent()
     {
         // Arrange
-        DateTime showtime = new DateTime(2026, 5, 12, 19, 0, 0);
+        DateTime showtime = new DateTime(2026, 8, 12, 19, 0, 0);
 
         Movie movie = Movie.Create(
             "Test Movie",
@@ -96,7 +96,7 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
     public async Task Execute_WithExistingMovieEvent_ShouldUpdateMovieEvent()
     {
         // Arrange
-        DateTime showtime = new DateTime(2026, 5, 12, 19, 0, 0);
+        DateTime showtime = new DateTime(2026, 8, 12, 19, 0, 0);
         Guid movieId2 = Guid.NewGuid();
 
         Movie movie1 = Movie.Create(
