@@ -13,9 +13,9 @@ public record ScheduleMovieEventRequest(
 );
 
 public record ScheduleMovieEventBody(
-    [Required] Guid MovieId,
-    [Required] Guid RoomId,
-    [Required] DateTime Showtime
+    Guid MovieId,
+    Guid RoomId,
+    DateTime Showtime
 );
 
 public static class ScheduleMovieEventController

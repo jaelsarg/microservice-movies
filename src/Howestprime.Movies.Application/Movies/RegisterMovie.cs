@@ -1,5 +1,6 @@
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Domain.Movies;
+using Howestprime.Movies.Domain.Movies.ValueObjects;
 using Microsoft.Extensions.Logging;
 
 namespace Howestprime.Movies.Application.Movies;
@@ -25,12 +26,12 @@ public sealed class RegisterMovie(
         Movie movie = Movie.Create(
             input.Title,
             input.Description,
-            input.ReleaseYear,
-            input.Duration,
-            input.Genres,
-            input.Actors,
-            input.AgeRating,
-            input.PosterUrl
+            ReleaseYear.Create(input.ReleaseYear),
+            Duration.Create(input.Duration),
+            input.Genres.Select(Genre.Create).ToList(),
+            input.Actors.Select(Actor.Create).ToList(),
+            AgeRating.Create(input.AgeRating),
+            PosterUrl.Create(input.PosterUrl)
         );
 
         await _uow.Save<IMovieRepository>(movie);

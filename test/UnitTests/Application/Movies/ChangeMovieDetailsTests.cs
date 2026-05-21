@@ -1,6 +1,7 @@
 using Aornis;
 using Howestprime.Movies.Application.Movies;
 using Howestprime.Movies.Domain.Movies;
+using Howestprime.Movies.Domain.Movies.ValueObjects;
 using UnitTests.Application.Shared;
 
 namespace UnitTests.Application.Movies;
@@ -23,12 +24,12 @@ public sealed class ChangeMovieDetailsTests : ApplicationTestBase
         Movie movie = Movie.Create(
             "Inception",
             "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
-            2020,
-            148,
-            new List<string> { "Action", "Adventure", "Sci-Fi" },
-            new List<string> { "Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page" },
-            13,
-            "https://example.com/inception.jpg"
+            ReleaseYear.Create(2020),
+            Duration.Create(148),
+            new List<Genre> { Genre.Create("Action"), Genre.Create("Adventure"), Genre.Create("Sci-Fi") },
+            new List<Actor> { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt"), Actor.Create("Ellen Page") },
+            AgeRating.Create(13),
+            PosterUrl.Create("https://example.com/inception.jpg")
         );
         await UnitOfWork.Repo<IMovieRepository>().Save(movie);
     

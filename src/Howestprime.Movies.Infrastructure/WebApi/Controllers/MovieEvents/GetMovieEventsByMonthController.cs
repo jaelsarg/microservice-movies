@@ -20,6 +20,8 @@ public static class GetMovieEventsByMonthController
         [AsParameters] GetMovieEventsByMonthRequest request
     )
     {
+        Console.WriteLine($"Received request to get movie events for year {request.Year} and month {request.Month}.");
+
         int year = request.Year;
         int month = request.Month;
 

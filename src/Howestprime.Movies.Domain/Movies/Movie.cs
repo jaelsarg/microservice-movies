@@ -46,12 +46,12 @@ public sealed class Movie : AggregateRoot<MovieId>
     public static Movie Create(
         string title,
         string description,
-        int releaseYear,
-        int duration,
-        List<string> genres,
-        List<string> actors,
-        int ageRating,
-        string posterUrl,
+        ReleaseYear releaseYear,
+        Duration duration,
+        List<Genre> genres,
+        List<Actor> actors,
+        AgeRating ageRating,
+        PosterUrl posterUrl,
         MovieId? id = null
     )
     {
@@ -59,12 +59,12 @@ public sealed class Movie : AggregateRoot<MovieId>
             id ?? EntityId.New<MovieId>(),
             title,
             description,
-            ReleaseYear.Create(releaseYear),
-            Duration.Create(duration),
-            genres.Select(Genre.Create).ToList(),
-            actors.Select(Actor.Create).ToList(),
-            AgeRating.Create(ageRating),
-            PosterUrl.Create(posterUrl)
+            releaseYear,
+            duration,
+            genres,
+            actors,
+            ageRating,
+            posterUrl
         );
 
         movie.ValidateState();
@@ -91,31 +91,28 @@ public sealed class Movie : AggregateRoot<MovieId>
         Asserts.EnsureNotEmpty(Description);
         Asserts.EnsureNotEmpty(Genres);
         Asserts.EnsureNotEmpty(Actors);
-        Asserts.EnsureNotNegative(Duration.Value);
-        Asserts.EnsureNotNegative(AgeRating.Value);
-        Asserts.EnsureNotNegative(ReleaseYear.Value);
         MovieAsserts.EnsureReleaseYearIsInPast(ReleaseYear.Value);
     }
 
     public void ChangeDetails(
         string title,
         string description,
-        int releaseYear,
-        int duration,
-        List<string> genres,
-        List<string> actors,
-        int ageRating,
-        string posterUrl
+        ReleaseYear releaseYear,
+        Duration duration,
+        List<Genre> genres,
+        List<Actor> actors,
+        AgeRating ageRating,
+        PosterUrl posterUrl
     )
     {
         Title = title;
         Description = description;
-        ReleaseYear = ReleaseYear.Create(releaseYear);
-        Duration = Duration.Create(duration);
-        Genres = genres.Select(Genre.Create).ToList();
-        Actors = actors.Select(Actor.Create).ToList();
-        AgeRating = AgeRating.Create(ageRating);
-        PosterUrl = PosterUrl.Create(posterUrl);
+        ReleaseYear = releaseYear;
+        Duration = duration;
+        Genres = genres;
+        Actors = actors;
+        AgeRating = ageRating;
+        PosterUrl = posterUrl;
 
         ValidateState();
 

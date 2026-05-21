@@ -1,4 +1,5 @@
 using Howestprime.Movies.Domain.Movies;
+using Howestprime.Movies.Domain.Movies.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
 
 namespace UnitTests.Domain.Movies;
@@ -11,12 +12,12 @@ public sealed class MovieTests
         // Arrange
         string title = "Inception";
         string description = "A mind-bending thriller about dreams within dreams.";
-        int releaseYear = 2010;
-        int duration = 148;
-        List<string> genres = new() { "Action", "Sci-Fi" };
-        List<string> actors = new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" };
-        int ageRating = 13;
-        string posterUrl = "https://example.com/inception.jpg";
+        ReleaseYear releaseYear = ReleaseYear.Create(2010);
+        Duration duration = Duration.Create(148);
+        List<Genre> genres = new() { Genre.Create("Action"), Genre.Create("Sci-Fi") };
+        List<Actor> actors = new() { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt") };
+        AgeRating ageRating = AgeRating.Create(13);
+        PosterUrl posterUrl = PosterUrl.Create("https://example.com/inception.jpg");
 
         // Act
         var movie = Movie.Create(title, description, releaseYear, duration, genres, actors, ageRating, posterUrl);
@@ -24,12 +25,12 @@ public sealed class MovieTests
         // Assert
         Assert.Equal(title, movie.Title);
         Assert.Equal(description, movie.Description);
-        Assert.Equal(releaseYear, movie.ReleaseYear.Value);
-        Assert.Equal(duration, movie.Duration.Value);
+        Assert.Equal(releaseYear.Value, movie.ReleaseYear.Value);
+        Assert.Equal(duration.Value, movie.Duration.Value);
         Assert.Equal(genres.Count(), movie.Genres.Count());
         Assert.Equal(actors.Count(), movie.Actors.Count());
-        Assert.Equal(ageRating, movie.AgeRating.Value);
-        Assert.Equal(posterUrl, movie.PosterUrl.Value);
+        Assert.Equal(ageRating.Value, movie.AgeRating.Value);
+        Assert.Equal(posterUrl.Value, movie.PosterUrl.Value);
     }
 
     [Fact]
@@ -39,12 +40,12 @@ public sealed class MovieTests
         MovieId movieId = EntityId.New<MovieId>();
         string title = "Inception";
         string description = "A mind-bending thriller about dreams within dreams.";
-        int releaseYear = 2010;
-        int duration = 148;
-        List<string> genres = new() { "Action", "Sci-Fi" };
-        List<string> actors = new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" };
-        int ageRating = 13;
-        string posterUrl = "https://example.com/inception.jpg";
+        ReleaseYear releaseYear = ReleaseYear.Create(2010);
+        Duration duration = Duration.Create(148);
+        List<Genre> genres = new() { Genre.Create("Action"), Genre.Create("Sci-Fi") };
+        List<Actor> actors = new() { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt") };
+        AgeRating ageRating = AgeRating.Create(13);
+        PosterUrl posterUrl = PosterUrl.Create("https://example.com/inception.jpg");
 
         // Act
         var movie = Movie.Create(title, description, releaseYear, duration, genres, actors, ageRating, posterUrl, movieId);
@@ -53,12 +54,12 @@ public sealed class MovieTests
         Assert.Equal(movieId, movie.Id);
         Assert.Equal(title, movie.Title);
         Assert.Equal(description, movie.Description);
-        Assert.Equal(releaseYear, movie.ReleaseYear.Value);
-        Assert.Equal(duration, movie.Duration.Value);
+        Assert.Equal(releaseYear.Value, movie.ReleaseYear.Value);
+        Assert.Equal(duration.Value, movie.Duration.Value);
         Assert.Equal(genres.Count(), movie.Genres.Count());
         Assert.Equal(actors.Count(), movie.Actors.Count());
-        Assert.Equal(ageRating, movie.AgeRating.Value);
-        Assert.Equal(posterUrl, movie.PosterUrl.Value);
+        Assert.Equal(ageRating.Value, movie.AgeRating.Value);
+        Assert.Equal(posterUrl.Value, movie.PosterUrl.Value);
     }
 
     [Fact]
@@ -67,12 +68,12 @@ public sealed class MovieTests
         // Arrange
         string title = "";
         string description = "A mind-bending thriller about dreams within dreams.";
-        int releaseYear = 2010;
-        int duration = 148;
-        List<string> genres = new() { "Action", "Sci-Fi" };
-        List<string> actors = new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" };
-        int ageRating = 13;
-        string posterUrl = "https://example.com/inception.jpg";
+        ReleaseYear releaseYear = ReleaseYear.Create(2010);
+        Duration duration = Duration.Create(148);
+        List<Genre> genres = new() { Genre.Create("Action"), Genre.Create("Sci-Fi") };
+        List<Actor> actors = new() { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt") };
+        AgeRating ageRating = AgeRating.Create(13);
+        PosterUrl posterUrl = PosterUrl.Create("https://example.com/inception.jpg");
 
         // Act
         Action act = () => Movie.Create(title, description, releaseYear, duration, genres, actors, ageRating, posterUrl);
@@ -87,32 +88,12 @@ public sealed class MovieTests
         // Arrange
         string title = "Inception";
         string description = "";
-        int releaseYear = 2010;
-        int duration = 148;
-        List<string> genres = new() { "Action", "Sci-Fi" };
-        List<string> actors = new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" };
-        int ageRating = 13;
-        string posterUrl = "https://example.com/inception.jpg";
-
-        // Act
-        Action act = () => Movie.Create(title, description, releaseYear, duration, genres, actors, ageRating, posterUrl);
-
-        // Act & Assert
-        Assert.Throws<ArgumentException>(act);
-    }
-
-    [Fact]
-    public void Create_WithNegativeAgeRating_ShouldThrow()
-    {
-        // Arrange
-        string title = "Inception";
-        string description = "A mind-bending thriller about dreams within dreams.";
-        int releaseYear = 2010;
-        int duration = 148;
-        List<string> genres = new() { "Action", "Sci-Fi" };
-        List<string> actors = new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" };
-        int ageRating = -1;
-        string posterUrl = "https://example.com/inception.jpg";
+        ReleaseYear releaseYear = ReleaseYear.Create(2010);
+        Duration duration = Duration.Create(148);
+        List<Genre> genres = new() { Genre.Create("Action"), Genre.Create("Sci-Fi") };
+        List<Actor> actors = new() { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt") };
+        AgeRating ageRating = AgeRating.Create(13);
+        PosterUrl posterUrl = PosterUrl.Create("https://example.com/inception.jpg");
 
         // Act
         Action act = () => Movie.Create(title, description, releaseYear, duration, genres, actors, ageRating, posterUrl);
@@ -127,12 +108,12 @@ public sealed class MovieTests
         // Arrange
         string title = "Inception";
         string description = "A mind-bending thriller about dreams within dreams.";
-        int releaseYear = 2030;
-        int duration = 148;
-        List<string> genres = new() { "Action", "Sci-Fi" };
-        List<string> actors = new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" };
-        int ageRating = 13;
-        string posterUrl = "https://example.com/inception.jpg";
+        ReleaseYear releaseYear = ReleaseYear.Create(2030);
+        Duration duration = Duration.Create(148);
+        List<Genre> genres = new() { Genre.Create("Action"), Genre.Create("Sci-Fi") };
+        List<Actor> actors = new() { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt") };
+        AgeRating ageRating = AgeRating.Create(13);
+        PosterUrl posterUrl = PosterUrl.Create("https://example.com/inception.jpg");
 
         // Act
         Action act = () => Movie.Create(title, description, releaseYear, duration, genres, actors, ageRating, posterUrl);
@@ -148,23 +129,23 @@ public sealed class MovieTests
         Movie movie = Movie.Create(
             "Inception",
             "A mind-bending thriller about dreams within dreams.",
-            2010,
-            148,
-            new() { "Action", "Sci-Fi" },
-            new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" },
-            13,
-            "https://example.com/inception.jpg"
+            ReleaseYear.Create(2010),
+            Duration.Create(148),
+            new() { Genre.Create("Action"), Genre.Create("Sci-Fi") },
+            new() { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt") },
+            AgeRating.Create(13),
+            PosterUrl.Create("https://example.com/inception.jpg")
         );
 
         MovieId movieId = movie.Id;
         string newTitle = "Inception 2";
         string newDescription = "The sequel to the mind-bending thriller.";
-        int newReleaseYear = 2022;
-        int newDuration = 150;
-        List<string> newGenres = new() { "Action", "Sci-Fi", "Thriller" };
-        List<string> newActors = new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt", "Elliot Page" };
-        int newAgeRating = 15;
-        string newPosterUrl = "https://example.com/inception2.jpg";
+        ReleaseYear newReleaseYear = ReleaseYear.Create(2022);
+        Duration newDuration = Duration.Create(150);
+        List<Genre> newGenres = new() { Genre.Create("Action"), Genre.Create("Sci-Fi"), Genre.Create("Thriller") };
+        List<Actor> newActors = new() { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt"), Actor.Create("Elliot Page") };
+        AgeRating newAgeRating = AgeRating.Create(15);
+        PosterUrl newPosterUrl = PosterUrl.Create("https://example.com/inception2.jpg");
 
         // Act
         movie.ChangeDetails(newTitle, newDescription, newReleaseYear, newDuration, newGenres, newActors, newAgeRating, newPosterUrl);
@@ -173,12 +154,12 @@ public sealed class MovieTests
         Assert.Equal(movieId, movie.Id);
         Assert.Equal(newTitle, movie.Title);
         Assert.Equal(newDescription, movie.Description);
-        Assert.Equal(newReleaseYear, movie.ReleaseYear.Value);
-        Assert.Equal(newDuration, movie.Duration.Value);
+        Assert.Equal(newReleaseYear.Value, movie.ReleaseYear.Value);
+        Assert.Equal(newDuration.Value, movie.Duration.Value);
         Assert.Equal(newGenres.Count(), movie.Genres.Count());
         Assert.Equal(newActors.Count(), movie.Actors.Count());
-        Assert.Equal(newAgeRating, movie.AgeRating.Value);
-        Assert.Equal(newPosterUrl, movie.PosterUrl.Value);
+        Assert.Equal(newAgeRating.Value, movie.AgeRating.Value);
+        Assert.Equal(newPosterUrl.Value, movie.PosterUrl.Value);
     }
 
     [Fact]
@@ -188,18 +169,18 @@ public sealed class MovieTests
         Movie movie = Movie.Create(
             "Inception",
             "A mind-bending thriller about dreams within dreams.",
-            2010,
-            148,
-            new() { "Action", "Sci-Fi" },
-            new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" },
-            13,
-            "https://example.com/inception.jpg"
+            ReleaseYear.Create(2010),
+            Duration.Create(148),
+            new() { Genre.Create("Action"), Genre.Create("Sci-Fi") },
+            new() { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt") },
+            AgeRating.Create(13),
+            PosterUrl.Create("https://example.com/inception.jpg")
         );
 
         string newTitle = "";
 
         // Act
-        Action act = () => movie.ChangeDetails(newTitle, movie.Description, movie.ReleaseYear.Value, movie.Duration.Value, movie.Genres.Select(g => g.Value).ToList(), movie.Actors.Select(a => a.Value).ToList(), movie.AgeRating.Value, movie.PosterUrl.Value);
+        Action act = () => movie.ChangeDetails(newTitle, movie.Description, movie.ReleaseYear, movie.Duration, movie.Genres.Select(g => g).ToList(), movie.Actors.Select(a => a).ToList(), movie.AgeRating, movie.PosterUrl);
 
         // Act & Assert
         Assert.Throws<ArgumentException>(act);
@@ -212,18 +193,18 @@ public sealed class MovieTests
         Movie movie = Movie.Create(
             "Inception",
             "A mind-bending thriller about dreams within dreams.",
-            2010,
-            148,
-            new() { "Action", "Sci-Fi" },
-            new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" },
-            13,
-            "https://example.com/inception.jpg"
+            ReleaseYear.Create(2010),
+            Duration.Create(148),
+            new() { Genre.Create("Action"), Genre.Create("Sci-Fi") },
+            new() { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt") },
+            AgeRating.Create(13),
+            PosterUrl.Create("https://example.com/inception.jpg")
         );
 
         string newDescription = "";
 
         // Act
-        Action act = () => movie.ChangeDetails(movie.Title, newDescription, movie.ReleaseYear.Value, movie.Duration.Value, movie.Genres.Select(g => g.Value).ToList(), movie.Actors.Select(a => a.Value).ToList(), movie.AgeRating.Value, movie.PosterUrl.Value);
+        Action act = () => movie.ChangeDetails(movie.Title, newDescription, movie.ReleaseYear, movie.Duration, movie.Genres.Select(g => g).ToList(), movie.Actors.Select(a => a).ToList(), movie.AgeRating, movie.PosterUrl);
 
         // Act & Assert
         Assert.Throws<ArgumentException>(act);
@@ -236,66 +217,18 @@ public sealed class MovieTests
         Movie movie = Movie.Create(
             "Inception",
             "A mind-bending thriller about dreams within dreams.",
-            2010,
-            148,
-            new() { "Action", "Sci-Fi" },
-            new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" },
-            13,
-            "https://example.com/inception.jpg"
+            ReleaseYear.Create(2010),
+            Duration.Create(148),
+            new() { Genre.Create("Action"), Genre.Create("Sci-Fi") },
+            new() { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt") },
+            AgeRating.Create(13),
+            PosterUrl.Create("https://example.com/inception.jpg")
         );
 
-        int newReleaseYear = 2030;
+        ReleaseYear newReleaseYear = ReleaseYear.Create(2030);
 
         // Act
-        Action act = () => movie.ChangeDetails(movie.Title, movie.Description, newReleaseYear, movie.Duration.Value, movie.Genres.Select(g => g.Value).ToList(), movie.Actors.Select(a => a.Value).ToList(), movie.AgeRating.Value, movie.PosterUrl.Value);
-
-        // Act & Assert
-        Assert.Throws<ArgumentException>(act);
-    }
-
-    [Fact]
-    public void ChangeDetails_WithNegativeAgeRating_ShouldThrow()
-    {
-        // Arrange
-        Movie movie = Movie.Create(
-            "Inception",
-            "A mind-bending thriller about dreams within dreams.",
-            2010,
-            148,
-            new() { "Action", "Sci-Fi" },
-            new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" },
-            13,
-            "https://example.com/inception.jpg"
-        );
-
-        int newAgeRating = -1;
-
-        // Act
-        Action act = () => movie.ChangeDetails(movie.Title, movie.Description, movie.ReleaseYear.Value, movie.Duration.Value, movie.Genres.Select(g => g.Value).ToList(), movie.Actors.Select(a => a.Value).ToList(), newAgeRating, movie.PosterUrl.Value);
-
-        // Act & Assert
-        Assert.Throws<ArgumentException>(act);
-    }
-
-    [Fact]
-    public void ChangeDetails_WithNegativeDuration_ShouldThrow()
-    {
-        // Arrange
-        Movie movie = Movie.Create(
-            "Inception",
-            "A mind-bending thriller about dreams within dreams.",
-            2010,
-            148,
-            new() { "Action", "Sci-Fi" },
-            new() { "Leonardo DiCaprio", "Joseph Gordon-Levitt" },
-            13,
-            "https://example.com/inception.jpg"
-        );
-
-        int newDuration = -1;
-
-        // Act
-        Action act = () => movie.ChangeDetails(movie.Title, movie.Description, movie.ReleaseYear.Value, newDuration, movie.Genres.Select(g => g.Value).ToList(), movie.Actors.Select(a => a.Value).ToList(), movie.AgeRating.Value, movie.PosterUrl.Value);
+        Action act = () => movie.ChangeDetails(movie.Title, movie.Description, newReleaseYear, movie.Duration, movie.Genres.Select(g => g).ToList(), movie.Actors.Select(a => a).ToList(), movie.AgeRating, movie.PosterUrl);
 
         // Act & Assert
         Assert.Throws<ArgumentException>(act);

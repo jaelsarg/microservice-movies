@@ -1,6 +1,7 @@
 using Howestprime.Movies.Application.MovieEvents;
 using Howestprime.Movies.Domain.MovieEvents;
 using Howestprime.Movies.Domain.Movies;
+using Howestprime.Movies.Domain.Movies.ValueObjects;
 using Howestprime.Movies.Domain.Rooms;
 using Howestprime.Movies.Shared.Exceptions;
 using UnitTests.Application.Shared;
@@ -30,12 +31,12 @@ public sealed class CloseBookingTests : ApplicationTestBase
         Movie movie = Movie.Create(
             "Movie title",
             "Movie description",
-            2025,
-            100,
-            new List<string> { "Action", "Adventure", "Sci-Fi" },
-            new List<string> { "Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page" },
-            12,
-            "PosterUrl"
+            ReleaseYear.Create(2025),
+            Duration.Create(100),
+            new List<Genre> { Genre.Create("Action"), Genre.Create("Adventure"), Genre.Create("Sci-Fi") },
+            new List<Actor> { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt"), Actor.Create("Ellen Page") },
+            AgeRating.Create(12),
+            PosterUrl.Create("PosterUrl")
         );
         await MovieRepository.Save(movie);
         MovieEvent movieEvent = MovieEvent.Create(
@@ -80,12 +81,12 @@ public sealed class CloseBookingTests : ApplicationTestBase
         Movie movie = Movie.Create(
             "Movie title",
             "Movie description",
-            2025,
-            100,
-            new List<string> { "Action", "Adventure", "Sci-Fi" },
-            new List<string> { "Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page" },
-            12,
-            "PosterUrl"
+            ReleaseYear.Create(2025),
+            Duration.Create(100),
+            new List<Genre> { Genre.Create("Action"), Genre.Create("Adventure"), Genre.Create("Sci-Fi") },
+            new List<Actor> { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt"), Actor.Create("Ellen Page") },
+            AgeRating.Create(12),
+            PosterUrl.Create("PosterUrl")
         );
         await MovieRepository.Save(movie);
         MovieEvent movieEvent = MovieEvent.Create(
@@ -130,12 +131,12 @@ public sealed class CloseBookingTests : ApplicationTestBase
         Movie movie = Movie.Create(
             "Movie title",
             "Movie description",
-            2025,
-            100,
-            new List<string> { "Action", "Adventure", "Sci-Fi" },
-            new List<string> { "Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page" },
-            12,
-            "PosterUrl"
+            ReleaseYear.Create(2025),
+            Duration.Create(100),
+            new List<Genre> { Genre.Create("Action"), Genre.Create("Adventure"), Genre.Create("Sci-Fi") },
+            new List<Actor> { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt"), Actor.Create("Ellen Page") },
+            AgeRating.Create(12),
+            PosterUrl.Create("PosterUrl")
         );
         await MovieRepository.Save(movie);
         MovieEvent movieEvent = MovieEvent.Create(
@@ -175,12 +176,12 @@ public sealed class CloseBookingTests : ApplicationTestBase
         Movie movie = Movie.Create(
             "Movie title",
             "Movie description",
-            2025,
-            100,
-            new List<string> { "Action", "Adventure", "Sci-Fi" },
-            new List<string> { "Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page" },
-            12,
-            "PosterUrl"
+            ReleaseYear.Create(2025),
+            Duration.Create(100),
+            new List<Genre> { Genre.Create("Action"), Genre.Create("Adventure"), Genre.Create("Sci-Fi") },
+            new List<Actor> { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt"), Actor.Create("Ellen Page") },
+            AgeRating.Create(12),
+            PosterUrl.Create("PosterUrl")
         );
         await MovieRepository.Save(movie);
         MovieEvent movieEvent = MovieEvent.Create(

@@ -1,6 +1,7 @@
 using Aornis;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Domain.Movies;
+using Howestprime.Movies.Domain.Movies.ValueObjects;
 using Howestprime.Movies.Shared.Exceptions;
 using Microsoft.Extensions.Logging;
 
@@ -34,12 +35,12 @@ public sealed class ChangeMovieDetails(
         movie.ChangeDetails(
             input.Title,
             input.Description,
-            input.ReleaseYear,
-            input.Duration,
-            input.Genres,
-            input.Actors,
-            input.AgeRating,
-            input.PosterUrl
+            ReleaseYear.Create(input.ReleaseYear),
+            Duration.Create(input.Duration),
+            input.Genres.Select(Genre.Create).ToList(),
+            input.Actors.Select(Actor.Create).ToList(),
+            AgeRating.Create(input.AgeRating),
+            PosterUrl.Create(input.PosterUrl)
         );
 
         await _uow.Save<IMovieRepository>(movie);

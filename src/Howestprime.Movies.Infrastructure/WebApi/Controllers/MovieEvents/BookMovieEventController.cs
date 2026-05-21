@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 public record BookMovieEventRequest(
-    [FromBody] BookMovieEventBody body,
+    [FromBody] BookMovieEventBody Body,
     [FromRoute] Guid MovieEventId,
     [FromServices] IUseCase<BookMovieEventInput, Guid> UseCase
 );
@@ -21,10 +21,12 @@ public static class BookMovieEventController
         [AsParameters] BookMovieEventRequest request
     )
     {
+        Console.WriteLine($"Received request to book movie event {request.MovieEventId} for {request.Body.StandardVisitors} standard visitors and {request.Body.DiscountedVisitors} discounted visitors.");
+
         BookMovieEventInput input = new(
             request.MovieEventId,
-            request.body.StandardVisitors,
-            request.body.DiscountedVisitors
+            request.Body.StandardVisitors,
+            request.Body.DiscountedVisitors
         );
 
         Guid bookingId = await request.UseCase.Execute(input);

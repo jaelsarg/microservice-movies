@@ -1,7 +1,4 @@
 using Howestprime.Movies.Domain.MovieEvents;
-using Howestprime.Movies.Domain.Movies;
-using Howestprime.Movies.Domain.Rooms;
-using Howestprime.Movies.Domain.Shared;
 
 namespace UnitTests.Domain.MovieEvents;
 

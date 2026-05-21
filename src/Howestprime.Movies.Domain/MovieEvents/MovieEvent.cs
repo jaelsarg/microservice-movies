@@ -77,7 +77,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
     public BookingId Book(int standardVisitors, int discountedVisitors, string roomName)
     {
         int totalVisitors = standardVisitors + discountedVisitors;
-        List<int> seatNumbers = new();
+        List<int> seatNumbers = [];
 
         for (int i = 0; i < totalVisitors; i++)
         {

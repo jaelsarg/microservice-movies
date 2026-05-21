@@ -22,6 +22,8 @@ public static class FindMovieByIdController
         [AsParameters] FindMovieByIdRequest request
     )
     {
+        Console.WriteLine($"Received request to find movie with id {request.Id} from user with role {request.UserRole}.");
+
         if (request.UserRole.ToLower() != "manager")
         {
             return TypedResults.BadRequest("Access denied.");

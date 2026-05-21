@@ -1,6 +1,7 @@
 using Howestprime.Movies.Application.MovieEvents;
 using Howestprime.Movies.Domain.MovieEvents;
 using Howestprime.Movies.Domain.Movies;
+using Howestprime.Movies.Domain.Movies.ValueObjects;
 using Howestprime.Movies.Domain.Rooms;
 using Howestprime.Movies.Domain.Shared;
 using Howestprime.Movies.Shared.Exceptions;
@@ -28,12 +29,12 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
         Movie movie = Movie.Create(
             "Test Movie",
             "A test movie description.",
-            2025,
-            120,
-            new List<string> { "Action", "Adventure" },
-            new List<string> { "Actor 1", "Actor 2" },
-            16,
-            "http://example.com/poster.jpg",
+            ReleaseYear.Create(2025),
+            Duration.Create(120),
+            new List<Genre> { Genre.Create("Action"), Genre.Create("Adventure") },
+            new List<Actor> { Actor.Create("Actor 1"), Actor.Create("Actor 2") },
+            AgeRating.Create(16),
+            PosterUrl.Create("http://example.com/poster.jpg"),
             EntityId.New<MovieId>(_movieId)
         );
 
@@ -77,12 +78,12 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
         Movie movie = Movie.Create(
             "Test Movie",
             "A test movie description.",
-            2025,
-            120,
-            new List<string> { "Action", "Adventure" },
-            new List<string> { "Actor 1", "Actor 2" },
-            16,
-            "http://example.com/poster.jpg",
+            ReleaseYear.Create(2025),
+            Duration.Create(120),
+            new List<Genre> { Genre.Create("Action"), Genre.Create("Adventure") },
+            new List<Actor> { Actor.Create("Actor 1"), Actor.Create("Actor 2") },
+            AgeRating.Create(16),
+            PosterUrl.Create("http://example.com/poster.jpg"),
             EntityId.New<MovieId>(_movieId)
         );
 
@@ -102,24 +103,24 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
         Movie movie1 = Movie.Create(
             "Test Movie 1",
             "A test movie description.",
-            2025,
-            120,
-            new List<string> { "Action", "Adventure" },
-            new List<string> { "Actor 1", "Actor 2" },
-            16,
-            "http://example.com/poster1.jpg",
+            ReleaseYear.Create(2025),
+            Duration.Create(120),
+            new List<Genre> { Genre.Create("Action"), Genre.Create("Adventure") },
+            new List<Actor> { Actor.Create("Actor 1"), Actor.Create("Actor 2") },
+            AgeRating.Create(16),
+            PosterUrl.Create("http://example.com/poster1.jpg"),
             EntityId.New<MovieId>(_movieId)
         );
 
         Movie movie2 = Movie.Create(
             "Test Movie 2",
             "Another test movie description.",
-            2025,
-            90,
-            new List<string> { "Comedy" },
-            new List<string> { "Actor 3", "Actor 4" },
-            12,
-            "http://example.com/poster2.jpg",
+            ReleaseYear.Create(2025),
+            Duration.Create(90),
+            new List<Genre> { Genre.Create("Comedy") },
+            new List<Actor> { Actor.Create("Actor 3"), Actor.Create("Actor 4") },
+            AgeRating.Create(12),
+            PosterUrl.Create("http://example.com/poster2.jpg"),
             EntityId.New<MovieId>(movieId2)
         );
 

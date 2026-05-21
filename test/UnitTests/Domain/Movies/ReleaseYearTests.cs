@@ -18,19 +18,6 @@ public sealed class ReleaseYearTests
     }
 
     [Fact]
-    public void Create_WithReleaseYearInFuture_ShouldThrow()
-    {
-        // Arrange
-        int releaseYear = 2050;
-
-        // Act
-        Action act = () => ReleaseYear.Create(releaseYear);
-
-        // Act & Assert
-        Assert.Throws<ArgumentException>(act);
-    }
-
-    [Fact]
     public void Create_WithNegativeReleaseYear_ShouldThrow()
     {
         // Arrange

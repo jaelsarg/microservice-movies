@@ -13,14 +13,14 @@ public record RegisterMovieRequest(
 );
 
 public record RegisterMovieBody(
-    [Required] string Title,
-    [Required] string Description,
-    [Required] int Duration,
-    [Required] List<string> Genres,
-    [Required] int ReleaseYear,
-    [Required] List<string> Actors,
-    [Required] int AgeRating,
-    [Required] string PosterUrl
+    string Title,
+    string Description,
+    int Duration,
+    List<string> Genres,
+    int ReleaseYear,
+    List<string> Actors,
+    int AgeRating,
+    string PosterUrl
 );
 
 public static class RegisterMovieController
@@ -29,6 +29,8 @@ public static class RegisterMovieController
         [AsParameters] RegisterMovieRequest request
     )
     {
+        Console.WriteLine($"Received request to register movie with title {request.Body.Title}, description {request.Body.Description}, duration {request.Body.Duration}, genres {string.Join(", ", request.Body.Genres)}, release year {request.Body.ReleaseYear}, actors {string.Join(", ", request.Body.Actors)}, age rating {request.Body.AgeRating} and poster url {request.Body.PosterUrl}.");
+
         RegisterMovieInput input = new(
             request.Body.Title,
             request.Body.Description,

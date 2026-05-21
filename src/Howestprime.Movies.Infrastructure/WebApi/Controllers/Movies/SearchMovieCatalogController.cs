@@ -21,6 +21,8 @@ public static class SearchMovieCatalogController
         [AsParameters] SearchMovieCatalogRequest request
     )
     {
+        Console.WriteLine($"Received request to search movie catalog with title {request.Title} and genres {request.Genres} from user with role {request.UserRole}.");
+
         if (request.UserRole.ToLower() != "manager")
         {
             return TypedResults.BadRequest("Access denied");

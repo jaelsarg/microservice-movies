@@ -39,7 +39,8 @@ public sealed class ScheduleMovieEvent(
             movieEvent = existingMovieEvents.First();
             movieEvent.UpdateMovieId(movieId);
             await uow.Repo<IMovieEventRepository>().Save(movieEvent);
-        } else
+        }
+        else
         {
             movieEvent = MovieEvent.Create(
                 movieId,

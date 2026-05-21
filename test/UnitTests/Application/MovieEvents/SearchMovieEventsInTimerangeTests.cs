@@ -1,5 +1,4 @@
 using System.Linq.Expressions;
-using System.Security;
 using Howestprime.Movies.Application.Contracts.Data;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.MovieEvents;

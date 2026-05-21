@@ -14,6 +14,8 @@ public static class GetHowestprimeScheduleController
         [FromServices] IUseCase<SearchMovieEventsInTimerangeInput, IReadOnlyList<MovieEventData>> useCase
     )
     {
+        Console.WriteLine("Received request to get Howestprime schedule.");
+
         DateTime fromDate = DateTime.UtcNow;
         DateTime toDate = fromDate.AddDays(14);
 
