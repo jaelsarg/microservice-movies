@@ -12,8 +12,6 @@ namespace UnitTests.Application.MovieEvents;
 public sealed class ScheduleMovieEventTests : ApplicationTestBase
 {
     private readonly ScheduleMovieEvent _scheduleMovieEvent;
-    private readonly Guid _movieId = Guid.NewGuid();
-    private readonly Guid _roomId = Guid.NewGuid();
 
     public ScheduleMovieEventTests()
     {
@@ -35,25 +33,25 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
             new List<Actor> { Actor.Create("Actor 1"), Actor.Create("Actor 2") },
             AgeRating.Create(16),
             PosterUrl.Create("http://example.com/poster.jpg"),
-            EntityId.New<MovieId>(_movieId)
+            EntityId.New<MovieId>()
         );
 
         Room room = Room.Create(
             "Room 1",
             100,
-            EntityId.New<RoomId>(_roomId)
+            EntityId.New<RoomId>()
         );
 
         await MovieRepository.Save(movie);
         await RoomRepository.Save(room);
 
         // Act
-        Guid movieEventId = await _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(_movieId, showtime, _roomId));
+        Guid movieEventId = await _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(movie.Id.Value, showtime, room.Id.Value));
 
         // Assert
         MovieEvent createdMovieEvent = (await MovieEventRepository.ById(new MovieEventId(movieEventId))).Value;
-        Assert.Equal(EntityId.New<MovieId>(_movieId), createdMovieEvent.MovieId);
-        Assert.Equal(EntityId.New<RoomId>(_roomId), createdMovieEvent.RoomId);
+        Assert.Equal(movie.Id, createdMovieEvent.MovieId);
+        Assert.Equal(room.Id, createdMovieEvent.RoomId);
         Assert.Equal(showtime, createdMovieEvent.Showtime);
     }
 
@@ -64,8 +62,16 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
         Guid nonExistingMovieId = Guid.NewGuid();
         DateTime showtime = new DateTime(2025, 5, 12, 19, 0, 0);
 
+        Room room = Room.Create(
+            "Room 1",
+            100,
+            EntityId.New<RoomId>()
+        );
+
+        await RoomRepository.Save(room);
+
         // Act & Assert
-        await Assert.ThrowsAsync<NotFoundException>(() => _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(nonExistingMovieId, showtime, _roomId)));
+        await Assert.ThrowsAsync<NotFoundException>(() => _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(nonExistingMovieId, showtime, room.Id.Value)));
     }
 
     [Fact]
@@ -84,13 +90,13 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
             new List<Actor> { Actor.Create("Actor 1"), Actor.Create("Actor 2") },
             AgeRating.Create(16),
             PosterUrl.Create("http://example.com/poster.jpg"),
-            EntityId.New<MovieId>(_movieId)
+            EntityId.New<MovieId>()
         );
 
         await MovieRepository.Save(movie);
 
         // Act & Assert
-        await Assert.ThrowsAsync<NotFoundException>(() => _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(_movieId, showtime, nonExistingRoomId)));
+        await Assert.ThrowsAsync<NotFoundException>(() => _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(movie.Id.Value, showtime, nonExistingRoomId)));
     }
 
     [Fact]
@@ -98,7 +104,6 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
     {
         // Arrange
         DateTime showtime = new DateTime(2026, 8, 12, 19, 0, 0);
-        Guid movieId2 = Guid.NewGuid();
 
         Movie movie1 = Movie.Create(
             "Test Movie 1",
@@ -109,7 +114,7 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
             new List<Actor> { Actor.Create("Actor 1"), Actor.Create("Actor 2") },
             AgeRating.Create(16),
             PosterUrl.Create("http://example.com/poster1.jpg"),
-            EntityId.New<MovieId>(_movieId)
+            EntityId.New<MovieId>()
         );
 
         Movie movie2 = Movie.Create(
@@ -121,13 +126,13 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
             new List<Actor> { Actor.Create("Actor 3"), Actor.Create("Actor 4") },
             AgeRating.Create(12),
             PosterUrl.Create("http://example.com/poster2.jpg"),
-            EntityId.New<MovieId>(movieId2)
+            EntityId.New<MovieId>()
         );
 
         Room room = Room.Create(
             "Room 1",
             100,
-            EntityId.New<RoomId>(_roomId)
+            EntityId.New<RoomId>()
         );
 
         await MovieRepository.Save(movie1);
@@ -144,10 +149,12 @@ public sealed class ScheduleMovieEventTests : ApplicationTestBase
         await MovieEventRepository.Save(existingMovieEvent);
 
         // Act
-        Guid movieEventId = await _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(movieId2, showtime, _roomId));
+        Guid movieEventId = await _scheduleMovieEvent.Execute(new ScheduleMovieEventInput(movie2.Id.Value, showtime, room.Id.Value));
 
         // Assert
         MovieEvent updatedMovieEvent = (await MovieEventRepository.ById(new MovieEventId(movieEventId))).Value;
         Assert.Equal(movie2.Id, updatedMovieEvent.MovieId);
+        Assert.Equal(room.Id, updatedMovieEvent.RoomId);
+        Assert.Equal(showtime, updatedMovieEvent.Showtime);
     }
 }
