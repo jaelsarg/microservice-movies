@@ -46,6 +46,7 @@ public static class SearchMovieCatalogController
                 movie.Title,
                 movie.Description,
                 movie.ReleaseYear,
+                movie.Duration,
                 movie.Genres.Select(g => g.Value).ToList(),
                 movie.Actors.Select(a => a.Value).ToList(),
                 movie.AgeRating,

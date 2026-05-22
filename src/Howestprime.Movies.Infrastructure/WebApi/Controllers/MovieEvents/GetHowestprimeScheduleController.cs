@@ -42,6 +42,7 @@ public static class GetHowestprimeScheduleController
                     movieEvent.Movie.Title,
                     movieEvent.Movie.Description,
                     movieEvent.Movie.ReleaseYear,
+                    movieEvent.Movie.Duration,
                     movieEvent.Movie.Genres.Select(genre => genre.Value).ToList(),
                     movieEvent.Movie.Actors.Select(actor => actor.Value).ToList(),
                     movieEvent.Movie.AgeRating,

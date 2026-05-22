@@ -5,6 +5,7 @@ public sealed record Movie(
     string Title,
     string Description,
     int ReleaseYear,
+    int Duration,
     List<string> Genres,
     List<string> Actors,
     int AgeRating,

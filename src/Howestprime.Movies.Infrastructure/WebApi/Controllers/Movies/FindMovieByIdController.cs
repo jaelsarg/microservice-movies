@@ -44,6 +44,7 @@ public static class FindMovieByIdController
             movieData.Title,
             movieData.Description,
             movieData.ReleaseYear,
+            movieData.Duration,
             movieData.Genres.Select(g => g.Value).ToList(),
             movieData.Actors.Select(a => a.Value).ToList(),
             movieData.AgeRating,
