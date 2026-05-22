@@ -107,7 +107,7 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
                             b1.Property<string>("BookingStatus")
                                 .IsRequired();
 
-                            b1.Property<int>("DiscountedVisitors");
+                            b1.Property<int>("DiscountVisitors");
 
                             b1.Property<Guid>("Id");
 

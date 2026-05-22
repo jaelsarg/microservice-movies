@@ -104,14 +104,14 @@ public sealed class MovieEventTests
         MovieEvent movieEvent = MovieEvent.Create(movieId, roomId, showtime, capacity);
 
         int standardVisitors = 2;
-        int discountedVisitors = 1;
+        int discountVisitors = 1;
         string roomName = "Room 1";
 
         // Act
-        BookingId bookingId = movieEvent.Book(standardVisitors, discountedVisitors, roomName);
+        BookingId bookingId = movieEvent.Book(standardVisitors, discountVisitors, roomName);
 
         // Assert
-        Assert.Equal(standardVisitors + discountedVisitors, movieEvent.Visitors);
+        Assert.Equal(standardVisitors + discountVisitors, movieEvent.Visitors);
         Assert.Single(movieEvent.Bookings);
         Assert.Contains(
             movieEvent.DomainEvents,
@@ -121,7 +121,7 @@ public sealed class MovieEventTests
                 opened.Room == roomName &&
                 opened.Showtime == showtime &&
                 opened.StandardVisitors == standardVisitors &&
-                opened.DiscountedVisitors == discountedVisitors
+                opened.DiscountVisitors == discountVisitors
         );
     }
 }

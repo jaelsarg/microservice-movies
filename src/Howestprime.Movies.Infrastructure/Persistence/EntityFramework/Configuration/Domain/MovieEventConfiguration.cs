@@ -33,7 +33,7 @@ public class MovieEventConfiguration : IEntityTypeConfiguration<MovieEvent>
                 .IsRequired();
 
             bookingBuilder.Property(booking => booking.StandardVisitors).IsRequired();
-            bookingBuilder.Property(booking => booking.DiscountedVisitors).IsRequired();
+            bookingBuilder.Property(booking => booking.DiscountVisitors).IsRequired();
             bookingBuilder.Property(booking => booking.SeatNumbers).IsRequired();
             
         });

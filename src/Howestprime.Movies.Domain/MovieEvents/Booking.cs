@@ -9,7 +9,7 @@ public sealed class Booking : Entity<BookingId>
     public BookingStatus BookingStatus { get; private set; }
     public PaymentStatus PaymentStatus { get; private set; }
     public int StandardVisitors { get; private set; }
-    public int DiscountedVisitors { get; private set; }
+    public int DiscountVisitors { get; private set; }
     public List<int> SeatNumbers { get; private set; }
 
     private Booking(
@@ -17,14 +17,14 @@ public sealed class Booking : Entity<BookingId>
         BookingStatus bookingStatus,
         PaymentStatus paymentStatus,
         int standardVisitors,
-        int discountedVisitors,
+        int discountVisitors,
         List<int> seatNumbers
     ) : base(id)
     {
         BookingStatus = bookingStatus;
         PaymentStatus = paymentStatus;
         StandardVisitors = standardVisitors;
-        DiscountedVisitors = discountedVisitors;
+        DiscountVisitors = discountVisitors;
         SeatNumbers = seatNumbers;
     }
 
@@ -36,7 +36,7 @@ public sealed class Booking : Entity<BookingId>
         BookingStatus bookingStatus,
         PaymentStatus paymentStatus,
         int standardVisitors,
-        int discountedVisitors,
+        int discountVisitors,
         List<int> seatNumbers
     )
     {
@@ -45,7 +45,7 @@ public sealed class Booking : Entity<BookingId>
             bookingStatus,
             paymentStatus,
             standardVisitors,
-            discountedVisitors,
+            discountVisitors,
             seatNumbers
         );
 
@@ -56,8 +56,8 @@ public sealed class Booking : Entity<BookingId>
 
     public override void ValidateState()
     {
-        BookingAsserts.EnsureVisitorsAreGreaterThanZero(StandardVisitors, DiscountedVisitors);
-        BookingAsserts.EnsureSeatNumbersMatchVisitors(SeatNumbers, StandardVisitors, DiscountedVisitors);
+        BookingAsserts.EnsureVisitorsAreGreaterThanZero(StandardVisitors, DiscountVisitors);
+        BookingAsserts.EnsureSeatNumbersMatchVisitors(SeatNumbers, StandardVisitors, DiscountVisitors);
     }
 
     public void Close()

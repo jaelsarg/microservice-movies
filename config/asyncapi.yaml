@@ -220,7 +220,7 @@ components:
             format: date-time
           standardVisitors:
             type: integer
-          discountedVisitors:
+          discountVisitors:
             type: integer
           seatNumbers:
             type: array
@@ -232,7 +232,7 @@ components:
           - room
           - showtime
           - standardVisitors
-          - discountedVisitors
+          - discountVisitors
           - seatNumbers
 
     PaymentFailed:

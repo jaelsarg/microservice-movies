@@ -12,7 +12,7 @@ public record BookMovieEventRequest(
 
 public record BookMovieEventBody(
     int StandardVisitors,
-    int DiscountedVisitors
+    int DiscountVisitors
 );
 
 public static class BookMovieEventController
@@ -21,12 +21,12 @@ public static class BookMovieEventController
         [AsParameters] BookMovieEventRequest request
     )
     {
-        Console.WriteLine($"Received request to book movie event {request.MovieEventId} for {request.Body.StandardVisitors} standard visitors and {request.Body.DiscountedVisitors} discounted visitors.");
+        Console.WriteLine($"Received request to book movie event {request.MovieEventId} for {request.Body.StandardVisitors} standard visitors and {request.Body.DiscountVisitors} discounted visitors.");
 
         BookMovieEventInput input = new(
             request.MovieEventId,
             request.Body.StandardVisitors,
-            request.Body.DiscountedVisitors
+            request.Body.DiscountVisitors
         );
 
         Guid bookingId = await request.UseCase.Execute(input);

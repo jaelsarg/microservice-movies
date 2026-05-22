@@ -74,9 +74,9 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
         MovieId = movieId;
     }
 
-    public BookingId Book(int standardVisitors, int discountedVisitors, string roomName)
+    public BookingId Book(int standardVisitors, int discountVisitors, string roomName)
     {
-        int totalVisitors = standardVisitors + discountedVisitors;
+        int totalVisitors = standardVisitors + discountVisitors;
         List<int> seatNumbers = [];
 
         for (int i = 0; i < totalVisitors; i++)
@@ -88,7 +88,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
             BookingStatus.Open,
             PaymentStatus.Pending,
             standardVisitors,
-            discountedVisitors,
+            discountVisitors,
             seatNumbers
         );
 
@@ -101,7 +101,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
             roomName,
             Showtime,
             standardVisitors,
-            discountedVisitors,
+            discountVisitors,
             seatNumbers
         ));
 
@@ -122,7 +122,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
             booking.Close();
             booking.MarkPaymentAsFailed();
             booking.ReleaseSeats();
-            Visitors -= booking.StandardVisitors + booking.DiscountedVisitors;
+            Visitors -= booking.StandardVisitors + booking.DiscountVisitors;
         }
     }
 }

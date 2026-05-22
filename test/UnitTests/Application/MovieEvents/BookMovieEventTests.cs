@@ -55,7 +55,7 @@ public sealed class BookMovieEventTests : ApplicationTestBase
         Assert.Equal(BookingStatus.Open, booking.BookingStatus);
         Assert.Equal(PaymentStatus.Pending, booking.PaymentStatus);
         Assert.Equal(2, booking.StandardVisitors);
-        Assert.Equal(1, booking.DiscountedVisitors);
+        Assert.Equal(1, booking.DiscountVisitors);
         Assert.Equal(new List<int> { 1, 2, 3 }, booking.SeatNumbers);
     }
 
