@@ -3,11 +3,10 @@ using Aornis;
 using Howestprime.Movies.Application.Contracts.Data;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.Movies;
-using UnitTests.Application.Shared;
 
 namespace UnitTests.Application.Movies;
 
-public sealed class FindMovieByIdTests : ApplicationTestBase
+public sealed class FindMovieByIdTests
 {
     [Fact]
     public async Task Execute_WithValidId_ShouldReturnMovie()

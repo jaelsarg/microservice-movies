@@ -2,11 +2,10 @@ using System.Linq.Expressions;
 using Howestprime.Movies.Application.Contracts.Data;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.MovieEvents;
-using UnitTests.Application.Shared;
 
 namespace UnitTests.Application.MovieEvents;
 
-public sealed class SearchMovieEventsInTimerangeTests : ApplicationTestBase
+public sealed class SearchMovieEventsInTimerangeTests
 {
     [Fact]
     public async Task Execute_WithInput_ShouldFilterMovieEvents()

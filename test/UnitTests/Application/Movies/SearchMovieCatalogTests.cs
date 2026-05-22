@@ -2,11 +2,10 @@ using System.Linq.Expressions;
 using Howestprime.Movies.Application.Contracts.Data;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.Movies;
-using UnitTests.Application.Shared;
 
 namespace UnitTests.Application.Movies;
 
-public sealed class SearchMovieCatalogTests : ApplicationTestBase
+public sealed class SearchMovieCatalogTests
 {
     [Fact]
     public async Task Execute_WithValidInput_ShouldFilterMovieCatalog()
