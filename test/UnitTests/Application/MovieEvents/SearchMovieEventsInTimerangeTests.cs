@@ -11,15 +11,15 @@ public sealed class SearchMovieEventsInTimerangeTests
     public async Task Execute_WithInput_ShouldFilterMovieEvents()
     {
         // Arrange
-        DateTime fromDate = new DateTime(2026, 5, 1);
-        DateTime toDate = new DateTime(2026, 5, 31);
+        DateTime fromDate = new DateTime(2026, 9, 1);
+        DateTime toDate = new DateTime(2026, 9, 30);
 
         List<MovieEventData> data =
         [
             new MovieEventData
             {
                 Id = Guid.NewGuid(),
-                Showtime = new DateTime(2026, 5, 10, 19, 0, 0),
+                Showtime = new DateTime(2026, 9, 10, 19, 0, 0),
                 Capacity = 100,
                 Room = new RoomData
                 {
@@ -43,7 +43,7 @@ public sealed class SearchMovieEventsInTimerangeTests
             new MovieEventData
             {
                 Id = Guid.NewGuid(),
-                Showtime = new DateTime(2026, 6, 10, 20, 0, 0),
+                Showtime = new DateTime(2026, 10, 10, 19, 0, 0),
                 Capacity = 50,
                 Room = new RoomData
                 {
@@ -67,7 +67,7 @@ public sealed class SearchMovieEventsInTimerangeTests
             new MovieEventData
             {
                 Id = Guid.NewGuid(),
-                Showtime = new DateTime(2026, 5, 20, 18, 0, 0),
+                Showtime = new DateTime(2026, 9, 20, 15, 0, 0),
                 Capacity = 75,
                 Room = new RoomData
                 {
@@ -99,8 +99,8 @@ public sealed class SearchMovieEventsInTimerangeTests
 
         // Assert
         Assert.Equal(2, result.Count);
-        Assert.Contains(result, e => e.Movie.Title == "Movie 1");
-        Assert.Contains(result, e => e.Movie.Title == "Movie 3");
+        Assert.Contains(result, movieEvent => movieEvent.Movie.Title == "Movie 1");
+        Assert.Contains(result, movieEvent => movieEvent.Movie.Title == "Movie 3");
     }
 
     private sealed class FakeMovieEventQuery(IReadOnlyList<MovieEventData> data) : IMovieEventQuery
