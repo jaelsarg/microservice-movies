@@ -115,7 +115,7 @@ jobs:
           \
           --env-vars \
           ASPNETCORE_ENVIRONMENT=Production \
-          "Database__Password=secretref:db-password"\
+          "Database__Password=secretref:db-password" \
           "Database__Username=${{vars.HOWESTPRIME_MOVIES_P_PSQL_LOGIN}}" \
           "Database__ConnectionString=${{vars.HOWESTPRIME_MOVIES_P_PSQL_CONNECTION_STRING}}" \
           "MessageBroker__Hostname=${{vars.HOWESTPRIME_WIDE_P_MESSAGEBROKER_HOSTNAME}}" \
