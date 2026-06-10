@@ -15,8 +15,10 @@ public static class PersistenceModule
     {
         app.ApplyMigrations();
 
-        if (!app.Environment.IsProduction())
-            await app.SeedData();
+        // if (!app.Environment.IsProduction())
+        //     await app.SeedData();
+
+        await app.SeedData();
 
         return app; 
     }
