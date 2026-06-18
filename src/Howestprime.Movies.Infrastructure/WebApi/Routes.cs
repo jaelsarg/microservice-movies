@@ -10,7 +10,7 @@ public static class Routes
 {
     public static IEndpointRouteBuilder MapRoutes(this IEndpointRouteBuilder app)
     {
-        RouteGroupBuilder webApi = app.MapGroup("/api");
+        RouteGroupBuilder webApi = app.MapGroup("/apii");
 
         webApi.MapMovieRoutes();
         webApi.MapMovieEventRoutes();
